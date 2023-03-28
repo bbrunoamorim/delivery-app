@@ -28,6 +28,11 @@ const User = (sequelize, DataTypes) => {
       timestamps: false
     });
 
+
+  UserTable.associate = (models) => {
+    models.UserTable.hasMany(models.SaleModel, {});
+  }
+
   return UserTable;
 }
 
