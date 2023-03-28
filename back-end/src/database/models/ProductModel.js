@@ -24,13 +24,6 @@ const Product = (sequelize, DataTypes) => {
       timestamps: false
     });
 
-  ProductTable.associate = (models) => {
-    models.ProductTable.belongsToMany(models.SalesProductModel, {
-      as: 'products',
-      foreignKey: 'id'
-    });
-  };
-
   return ProductTable;
 }
 
