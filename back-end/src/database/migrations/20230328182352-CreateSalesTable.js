@@ -12,8 +12,9 @@ module.exports = {
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        field: 'user_id',
         references: {
-          model: 'UserModel',
+          model: 'users',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -22,8 +23,9 @@ module.exports = {
       sellerId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        field: 'seller_id',
         references: {
-          model: 'SellerModel',
+          model: 'users',
           key: 'id'
         },
         onUpdate: 'CASCADE',
