@@ -35,7 +35,7 @@ function LoginPage() {
         <Button
           type="submit"
           testId={ `${LOGIN}__${btnLogin}` }
-          onClick={ handleLogin }
+          // onClick={ handleLogin }
         >
           Entrar
         </Button>
