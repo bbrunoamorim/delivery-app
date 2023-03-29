@@ -48,9 +48,9 @@ const Sale = (sequelize, DataTypes) => {
       timestamps: false
     });
 
-  saleTable.associate = (models) => {
-    models.UserModel.belongsTo(models.UserModel, { foreignKey: 'userId', as: 'user' });
-    models.UserModel.belongsTo(models.UserModel, { foreignKey: 'sallerId', as: 'user' });
+  saleTable.associate = ({ UserModel, SaleModel }) => {
+    SaleModel.belongsTo(UserModel, { foreignKey: 'userId', as: 'user' });
+    SaleModel.belongsTo(UserModel, { foreignKey: 'sellerId', as: 'seller' });
   }
 
   return saleTable;
