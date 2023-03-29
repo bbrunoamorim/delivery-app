@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import AppContext from '../context/Context';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -7,6 +7,7 @@ import Button from '../components/Button';
 function LoginPage() {
   const { email, setEmail, password, setPassword,
     btnLogin, setBtnLogin } = useContext(AppContext);
+  const history = useHistory();
 
   const LOGIN = 'common_login';
   const idEmail = 'input-email';
@@ -36,7 +37,7 @@ function LoginPage() {
     }
   }, [email, password, setBtnLogin]);
 
-  const handleClickRegister = () => <Redirect to="/register" />;
+  const handleClickRegister = () => history.push('/register');
   return (
     <div>
       <h1>Login</h1>
