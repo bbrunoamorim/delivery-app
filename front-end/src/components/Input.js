@@ -16,18 +16,12 @@ function Input(props) {
 }
 
 Input.propTypes = {
-  type: PropTypes.string,
-  className: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   testId: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
-};
-
-Input.defaultProps = {
-  type: 'text',
-  className: '',
-  placeholder: '',
+  placeholder: PropTypes.string.isRequired,
 };
 
 export default Input;

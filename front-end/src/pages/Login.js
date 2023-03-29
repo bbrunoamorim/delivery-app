@@ -1,45 +1,79 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { Redirect } from 'react-router';
 import AppContext from '../context/Context';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
 function LoginPage() {
-  const { email, setEmail, password, setPassword } = useContext(AppContext);
+  const { email, setEmail, password, setPassword,
+    btnLogin, setBtnLogin } = useContext(AppContext);
 
-  function handleLogin(e) {
-    e.preventDefault();
-  }
-  const LOGIN = 'customer_products';
-  const inputEmail = 'input-email';
-  const inputPassword = 'input-password';
-  const btnLogin = 'button-login';
+  const LOGIN = 'common_login';
+  const idEmail = 'input-email';
+  const idPassword = 'input-password';
+  const idBtnLogin = 'button-login';
+  const idBtnRegister = 'button-register';
+  const idEmailInvalid = 'element-invalid-email';
 
+  const handleChangePassword = ({ target }) => {
+    setPassword(target.value);
+  };
+
+  const handleChangeEmail = ({ target }) => {
+    setEmail(target.value);
+  };
+
+  useEffect(() => {
+    const verifyLogin = () => {
+      const regex = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z.]*\w$/;
+      const MIN_LENGTH = 5;
+      return (regex.test(email) && password.length > MIN_LENGTH);
+    };
+    if (verifyLogin()) {
+      setBtnLogin(false);
+    } else {
+      setBtnLogin(true);
+    }
+  }, [email, password, setBtnLogin]);
+
+  const handleClickRegister = () => <Redirect to="/register" />;
   return (
     <div>
       <h1>Login</h1>
-      <form onSubmit={ handleLogin }>
+      <form>
         E-mail:
         <Input
           type="email"
           value={ email }
-          onChange={ (e) => setEmail(e.target.value) }
-          testId={ `${LOGIN}__${inputEmail}` }
+          onChange={ handleChangeEmail }
+          testId={ `${LOGIN}__${idEmail}` }
         />
-        Senha:
+        Password:
         <Input
-          testId={ `${LOGIN}__${inputPassword}` }
+          testId={ `${LOGIN}__${idPassword}` }
           type="password"
           value={ password }
-          onChange={ (e) => setPassword(e.target.value) }
+          onChange={ handleChangePassword }
         />
         <Button
           type="submit"
-          testId={ `${LOGIN}__${btnLogin}` }
-          // onClick={ handleLogin }
-        >
-          Entrar
-        </Button>
+          testId={ `${LOGIN}__${idBtnLogin}` }
+          disabled={ btnLogin }
+          nameBtn="Login"
+
+        />
+        <Button
+          type="submit"
+          testId={ `${LOGIN}__${idBtnRegister}` }
+          nameBtn="Register"
+          onClick={ handleClickRegister }
+        />
       </form>
+      <div
+        data-testid={ `${LOGIN}__${idEmailInvalid}` }
+      >
+        Email or password incorrect.
+      </div>
     </div>
   );
 }
