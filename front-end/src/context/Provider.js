@@ -3,14 +3,17 @@ import propTypes from 'prop-types';
 import AppContext from './Context';
 
 export default function Provider({ children }) {
-  const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const context = useMemo(
     () => ({
-      user,
-      setUser,
+      email,
+      setEmail,
+      password,
+      setPassword,
     }),
-    [user],
+    [email, password],
   );
   return <AppContext.Provider value={ context }>{children}</AppContext.Provider>;
 }
