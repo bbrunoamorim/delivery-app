@@ -1,3 +1,5 @@
+const SaleModel = require("./SaleModel");
+
 const SaleProduct = (sequelize, DataTypes) => {
   const SaleProductTable = sequelize.define('SaleProductModel', {
     saleId: {
@@ -27,15 +29,16 @@ const SaleProduct = (sequelize, DataTypes) => {
       timestamps: false
     });
 
-  SaleProductTable.associate = ({ SalesModel, ProductsModel }) => {
-    SalesModel.belongsToMany(ProductsModel, {
+  SaleProductTable.associate = ({SaleModel, ProductModel}) => {
+    // console.log(models)
+    SaleModel.belongsToMany(ProductModel, {
       as: 'sales',
       foreignKey: 'salesId',
       otherKey: 'productId',
       through: SaleProductTable,
     });
 
-    ProductsModel.belongsToMany(SalesModel, {
+    ProductModel.belongsToMany(SaleModel, {
       as: 'products',
       foreignKey: 'productId',
       otherKey: 'salesId',
