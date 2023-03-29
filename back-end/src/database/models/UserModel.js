@@ -1,9 +1,10 @@
-const User = (sequelize, DataTypes) => {
-  const UserTable = sequelize.define('UserModel', {
+module.exports = (sequelize, DataTypes) => {
+  const UserTable = sequelize.define('User', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING,
@@ -29,12 +30,10 @@ const User = (sequelize, DataTypes) => {
     });
 
 
-  UserTable.associate = ({ UserModel, SaleModel }) => {
-    UserModel.hasMany(SaleModel, { foreignKey: 'userId', as: 'sales' });
-    UserModel.hasMany(SaleModel, { foreignKey: 'sallerId', as: 'sales' });
+  UserTable.associate = ({ Sale }) => {
+    UserTable.hasMany(Sale, { foreignKey: 'user_id', as: 'user' });
+    UserTable.hasMany(Sale, { foreignKey: 'seller_id', as: 'seller' });
   }
 
   return UserTable;
 }
-
-module.exports = User;
