@@ -6,12 +6,15 @@ import './index.css';
 import App from './App';
 import Provider from './context/Provider';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <Provider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

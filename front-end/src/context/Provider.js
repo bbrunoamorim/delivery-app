@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import propTypes from 'prop-types';
-import AppContext from './myContext';
+import AppContext from './Context';
 
 export default function Provider({ children }) {
   const [user, setUser] = useState('');
