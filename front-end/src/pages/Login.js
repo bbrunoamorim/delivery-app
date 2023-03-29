@@ -3,10 +3,11 @@ import { Redirect } from 'react-router';
 import AppContext from '../context/Context';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { requestLogin } from '../services/api';
 
 function LoginPage() {
   const { email, setEmail, password, setPassword,
-    btnLogin, setBtnLogin } = useContext(AppContext);
+    btnLogin, setBtnLogin, error, setError } = useContext(AppContext);
 
   const LOGIN = 'common_login';
   const idEmail = 'input-email';
@@ -21,6 +22,14 @@ function LoginPage() {
 
   const handleChangeEmail = ({ target }) => {
     setEmail(target.value);
+  };
+
+  const handleClickLogin = async () => {
+    try {
+      await requestLogin(email, password);
+    } catch (err) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -60,6 +69,7 @@ function LoginPage() {
           testId={ `${LOGIN}__${idBtnLogin}` }
           disabled={ btnLogin }
           nameBtn="Login"
+          onClick={ handleClickLogin }
 
         />
         <Button
@@ -72,7 +82,7 @@ function LoginPage() {
       <div
         data-testid={ `${LOGIN}__${idEmailInvalid}` }
       >
-        Email or password incorrect.
+        {error && <text> Email or password incorrect. </text>}
       </div>
     </div>
   );

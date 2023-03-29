@@ -15,3 +15,9 @@ export const requestUsers = async () => {
 
   return data;
 };
+
+export const requestLogin = async (email, password) => {
+  const { data } = await api.post('/login', { email, password });
+
+  return data;
+};
