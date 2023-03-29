@@ -3,7 +3,7 @@ services:
   frontend:
     build: ./front-end
     ports:
-      - 3000:3000
+      - 3003:3000
     platform: linux/x86_64
     working_dir: /app-frontend
     depends_on:
