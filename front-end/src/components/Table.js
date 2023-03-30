@@ -4,11 +4,11 @@ function Table() {
   // const data = JSON.parse(localStorage.getItem('cartItens'));
 
   // variável temporária apenas para testar
-  const data = [
-    { name: 'testrestestes', quantity: 10, price: 5 },
-    { name: 'testrestestes', quantity: 10, price: 5 },
-    { name: 'testrestestes', quantity: 10, price: 5 },
-  ];
+  // const data = [
+  //   { name: 'testrestestes', quantity: 10, price: 5 },
+  //   { name: 'testrestestes', quantity: 10, price: 5 },
+  //   { name: 'testrestestes', quantity: 10, price: 5 },
+  // ];
 
   return (
     <table>

@@ -1,35 +1,32 @@
 import React, { useContext } from 'react';
 import AppContext from '../context/Context';
+import Button from './Button';
 
 export default function Navbar() {
   const { user } = useContext(AppContext);
   return (
     <nav>
-      <button
+      <Button
         type="button"
         data-testid="customer_products_element-navbar-link-products"
-      >
-        PRODUTOS
-      </button>
-      <button
+        nameBtn="PRODUTO"
+      />
+      <Button
         type="button"
         data-testid="customer_products_element-navbar-link-orders"
-      >
-        MEUS PEDIDOS
-      </button>
-      <button
+        nameBtn="MEUS PEDIDOS"
+      />
+      <Button
         type="button"
         data-testid="customer_products_element-navbar-user-full-name"
-      >
-        { user }
-      </button>
+        nameBtn={ user }
+      />
       <a href="/login">
-        <button
+        <Button
           type="button"
           data-testid="customer_products_element-navbar-link-logout"
-        >
-          Sair
-        </button>
+          nameBtn="SAIR"
+        />
       </a>
     </nav>
   );
