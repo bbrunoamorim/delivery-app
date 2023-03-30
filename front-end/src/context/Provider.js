@@ -4,6 +4,7 @@ import AppContext from './Context';
 
 export default function Provider({ children }) {
   const [email, setEmail] = useState('');
+  const [role, setRole] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [btnLogin, setBtnLogin] = useState(true);
@@ -36,6 +37,8 @@ export default function Provider({ children }) {
       setName,
       btnRegister,
       setBtnRegister,
+      role,
+      setRole,
     }),
     [
       email,
@@ -48,6 +51,7 @@ export default function Provider({ children }) {
       valorTotal,
       name,
       btnRegister,
+      role,
     ],
     [email, password, btnLogin, error, products,
       quantityProducts, disableQuantity, valorTotal],
