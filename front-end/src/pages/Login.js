@@ -30,7 +30,7 @@ function LoginPage() {
       const data = { email, password };
       const response = await requestLogin(data);
       const jsonData = response.data;
-      if (jsonData.message === 'User valid') {
+      if (jsonData.message !== 'Not found') {
         history.push('/customer/products');
       } else {
         console.error('A resposta do servidor está vazia.');

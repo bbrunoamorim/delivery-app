@@ -9,7 +9,7 @@ const jwtConfig = {
 
 const generateToken = (payload) => {
   try {
-    return jwt.sign(payload.dataValues, TOKEN_SECRET, jwtConfig);
+    return jwt.sign(payload, TOKEN_SECRET, jwtConfig);
   } catch (error) {
     throw new Error('Falha ao gerar token');
   }
