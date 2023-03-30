@@ -1,11 +1,11 @@
-import CheckoutService from '../Services/CheckoutService';
+const CheckoutService = require('../Services/CheckoutService');
 
 const createOrder = async (req, res) => {
   const { data } = req.body;
 
-  await CheckoutService.createOrder(data);
+  const id = await CheckoutService.createOrder(data);
 
-  return res.status(201).send();
+  return res.status(201).json({ id });
 };
 
 module.exports = {

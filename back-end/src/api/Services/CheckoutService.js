@@ -16,6 +16,7 @@ const createOrder = async (data, userId) => {
     quantity,
     saleId: sale.id,
   })));
+  return sale.id;
 };
 
 module.exports = {
