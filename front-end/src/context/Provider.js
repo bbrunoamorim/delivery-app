@@ -6,6 +6,7 @@ export default function Provider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [btnLogin, setBtnLogin] = useState(true);
+  const [error, setError] = useState(false);
   const [products, setProducts] = useState([]);
   const [quantityProducts, setQuantityProducts] = useState(0);
   const [disableQuantity, setDisableQuantity] = useState(true);
@@ -19,6 +20,8 @@ export default function Provider({ children }) {
       setPassword,
       btnLogin,
       setBtnLogin,
+      error,
+      setError,
       products,
       setProducts,
       quantityProducts,
@@ -28,7 +31,7 @@ export default function Provider({ children }) {
       valorTotal,
       setValorTotal,
     }),
-    [email, password, btnLogin, products, quantityProducts, disableQuantity, valorTotal],
+    [email, password, btnLogin, error, products, quantityProducts, disableQuantity, valorTotal],
   );
   return <AppContext.Provider value={ context }>{children}</AppContext.Provider>;
 }
