@@ -25,12 +25,25 @@ function LoginPage() {
     setEmail(target.value);
   };
 
+  const setLocalStorageData = async () => {
+    try {
+      const {
+        data: { message: { name, role, token } },
+      } = await requestLogin({ email, password });
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
+      localStorage.setItem('role', role);
+      localStorage.setItem('token', token);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleClickLogin = async () => {
     try {
-      const data = { email, password };
-      const response = await requestLogin(data);
-      const jsonData = response.data;
-      if (jsonData.message !== 'Not found') {
+      const { data } = await requestLogin({ email, password });
+      if (data.message !== 'Not found' && data.message.token) {
+        await setLocalStorageData();
         history.push('/customer/products');
       } else {
         console.error('A resposta do servidor está vazia.');
