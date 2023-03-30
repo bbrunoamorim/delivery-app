@@ -3,10 +3,11 @@ import { useHistory } from 'react-router-dom';
 import AppContext from '../context/Context';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { requestLogin } from '../services/api';
 
 function LoginPage() {
   const { email, setEmail, password, setPassword,
-    btnLogin, setBtnLogin } = useContext(AppContext);
+    btnLogin, setBtnLogin, error, setError } = useContext(AppContext);
   const history = useHistory();
 
   const LOGIN = 'common_login';
@@ -22,6 +23,21 @@ function LoginPage() {
 
   const handleChangeEmail = ({ target }) => {
     setEmail(target.value);
+  };
+
+  const handleClickLogin = async () => {
+    try {
+      const data = { email, password };
+      const response = await requestLogin(data);
+      const jsonData = response.data;
+      if (jsonData.message === 'User valid') {
+        history.push('/customer/products');
+      } else {
+        console.error('A resposta do servidor está vazia.');
+      }
+    } catch (err) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -61,6 +77,7 @@ function LoginPage() {
           testId={ `${LOGIN}__${idBtnLogin}` }
           disabled={ btnLogin }
           nameBtn="Login"
+          onClick={ handleClickLogin }
 
         />
         <Button
@@ -73,7 +90,7 @@ function LoginPage() {
       <div
         data-testid={ `${LOGIN}__${idEmailInvalid}` }
       >
-        Email or password incorrect.
+        {error && <p> Email or password incorrect. </p>}
       </div>
     </div>
   );
