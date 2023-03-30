@@ -16,6 +16,11 @@ export const requestUsers = async () => {
   return data;
 };
 
+export const requestCreateUsers = async (createUser) => {
+  const { data } = await api.post('/register', createUser);
+  return data;
+};
+
 export const requestLogin = async (dataset) => {
   const config = {
     method: 'POST',
@@ -26,4 +31,9 @@ export const requestLogin = async (dataset) => {
   };
   const response = await api.post('/login', dataset, config);
   return response;
+};
+
+export const requestCheckout = async (dataset) => {
+  const { data } = await api.post('/checkout', dataset);
+  return data.id;
 };

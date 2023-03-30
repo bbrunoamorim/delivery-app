@@ -7,7 +7,7 @@ import { requestLogin } from '../services/api';
 
 function LoginPage() {
   const { email, setEmail, password, setPassword,
-    btnLogin, setBtnLogin, error, setError } = useContext(AppContext);
+    btnLogin, setBtnLogin, error, setError, setName } = useContext(AppContext);
   const history = useHistory();
 
   const LOGIN = 'common_login';
@@ -30,10 +30,12 @@ function LoginPage() {
       const {
         data: { message: { name, role, token } },
       } = await requestLogin({ email, password });
-      localStorage.setItem('name', name);
-      localStorage.setItem('email', email);
-      localStorage.setItem('role', role);
-      localStorage.setItem('token', token);
+
+      const user = { name, email, role, token };
+
+      localStorage.setItem('user', JSON.stringify(user));
+
+      setName(name);
     } catch (err) {
       console.error(err);
     }
