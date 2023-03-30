@@ -7,6 +7,7 @@ export default function Provider({ children }) {
   const [password, setPassword] = useState('');
   const [btnLogin, setBtnLogin] = useState(true);
   const [error, setError] = useState(false);
+  const [products, setProducts] = useState([]);
 
   const context = useMemo(
     () => ({
@@ -18,8 +19,11 @@ export default function Provider({ children }) {
       setBtnLogin,
       error,
       setError,
+      products,
+      setProducts,
     }),
-    [email, password, btnLogin, error],
+    [email, password, btnLogin, error, products],
+
   );
   return <AppContext.Provider value={ context }>{children}</AppContext.Provider>;
 }

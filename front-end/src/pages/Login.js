@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Redirect, useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import AppContext from '../context/Context';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -53,7 +53,7 @@ function LoginPage() {
     }
   }, [email, password, setBtnLogin]);
 
-  const handleClickRegister = () => <Redirect to="/register" />;
+  const handleClickRegister = () => history.push('/register');
   return (
     <div>
       <h1>Login</h1>
