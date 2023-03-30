@@ -1,5 +1,5 @@
-import Table from '../components/Table';
-import AddAddress from '../components/AddAddress';
+import Table from '../components/CheckoutTable';
+import AddAddress from '../components/CheckoutAddAddress';
 
 function Checkout() {
   const data = JSON.parse(localStorage.getItem('cartItens'));
