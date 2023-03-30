@@ -4,8 +4,10 @@ import AppContext from './Context';
 
 export default function Provider({ children }) {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [btnLogin, setBtnLogin] = useState(true);
+  const [btnRegister, setBtnRegister] = useState(true);
   const [error, setError] = useState(false);
   const [products, setProducts] = useState([]);
   const [quantityProducts, setQuantityProducts] = useState(0);
@@ -30,7 +32,23 @@ export default function Provider({ children }) {
       setDisableQuantity,
       valorTotal,
       setValorTotal,
+      name,
+      setName,
+      btnRegister,
+      setBtnRegister,
     }),
+    [
+      email,
+      password,
+      btnLogin,
+      error,
+      products,
+      quantityProducts,
+      disableQuantity,
+      valorTotal,
+      name,
+      btnRegister,
+    ],
     [email, password, btnLogin, error, products,
       quantityProducts, disableQuantity, valorTotal],
   );
