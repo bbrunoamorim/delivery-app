@@ -32,3 +32,5 @@ export const requestLogin = async (dataset) => {
   const response = await api.post('/login', dataset, config);
   return response;
 };
+
+export const requestCheckout = async (data) => api.post('/checkout', data);

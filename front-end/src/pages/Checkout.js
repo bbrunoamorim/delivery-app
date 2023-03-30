@@ -1,8 +1,11 @@
+import { useHistory } from 'react-router-dom';
 import Table from '../components/CheckoutTable';
 import AddAddress from '../components/CheckoutAddAddress';
+import { requestCheckout } from '../services/api';
 
 function Checkout() {
-  const data = JSON.parse(localStorage.getItem('cartItens'));
+  const history = useHistory();
+  const products = JSON.parse(localStorage.getItem('cartItens'));
 
   /* // variável temporária apenas para testar
   const data = [
@@ -11,6 +14,16 @@ function Checkout() {
     { name: 'testrestestes', quantity: 10, price: 5 },
   ]; */
 
+  const handleClickCheckout = () => {
+    const data = {
+      data: {
+        products,
+      },
+    };
+    requestCheckout(data);
+    history.push('/register');
+  };
+
   return (
     <>
       <div>
@@ -18,7 +31,7 @@ function Checkout() {
         <Table />
         <div data-testid="customer_checkout__element-order-total-price">
           {
-            data.reduce((acc, cur) => acc + (cur.price * cur.quantity), 0)
+            products.reduce((acc, cur) => acc + (cur.price * cur.quantity), 0)
           }
         </div>
       </div>
@@ -29,6 +42,7 @@ function Checkout() {
       <button
         type="button"
         data-testid="customer_checkout__button-submit-order"
+        onClick={ handleClickCheckout }
       >
         FINALIZAR PEDIDO
       </button>
