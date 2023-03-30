@@ -17,8 +17,6 @@ function Register() {
     setName,
     btnRegister,
     setBtnRegister,
-    role,
-    setRole,
   } = useContext(AppContext);
 
   const history = useHistory();
@@ -42,18 +40,14 @@ function Register() {
     setName(target.value);
   };
 
-  const handleChangeRole = ({ target }) => {
-    setRole(target.value);
-  };
-
   const handleClickRegister = async () => {
-    try {
-      const create = await requestCreateUsers({ name, email, password, role });
-      console.log(create);
+    const status = 409;
+    const create = await requestCreateUsers({ name, email, password });
+    console.log(create);
+    if (create.type !== status) {
       history.push('/customer/products');
-    } catch (err) {
-      setError(true);
     }
+    setError(true);
   };
 
   useEffect(() => {
@@ -95,13 +89,6 @@ function Register() {
           type="password"
           value={ password }
           onChange={ handleChangePassword }
-        />
-        Role:
-        <Input
-          type="role"
-          testId="Role"
-          value={ role }
-          onChange={ handleChangeRole }
         />
         <Button
           type="submit"
