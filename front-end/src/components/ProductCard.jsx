@@ -10,11 +10,17 @@ export default function ProductCard({ index, price, urlImage, title }) {
     setQuantityProducts,
     disableQuantity,
     setDisableQuantity,
+    valorTotal,
+    setValorTotal,
   } = useContext(AppContext);
+
+  const idCustomerProd = 'customer_products_';
 
   const handleClickIncrement = () => {
     setQuantityProducts(quantityProducts + 1);
+    setValorTotal(valorTotal + price * 1);
   };
+
   useEffect(() => {
     if (quantityProducts > 0) {
       setDisableQuantity(false);
@@ -22,44 +28,55 @@ export default function ProductCard({ index, price, urlImage, title }) {
       setDisableQuantity(true);
     }
   });
-
   const handleClickDecrement = () => {
     setQuantityProducts(quantityProducts - 1);
+    setValorTotal(valorTotal - price * 1);
   };
   return (
     <div>
-      <h3 data-testid={ `customer_products_element-card-price-${index}` }>
+      <div>
+        Valor Total:
+        { valorTotal.toLocaleString('pt-Br', {
+          minimumFractionDigits: 2,
+          currency: 'BRL',
+          style: 'currency',
+        })}
+      </div>
+      <h3 data-testid={ `${idCustomerProd}element-card-price-${index}` }>
         {`R$ ${price}`}
       </h3>
       <img
-        data-testid={ `customer_products_img-card-bg-image-${index}` }
+        data-testid={ `${idCustomerProd}img-card-bg-image-${index}` }
         src={ urlImage }
         alt={ title }
       />
-      <h4 data-testid={ `customer_products_element-card-title-${index}` }>
+      <h4 data-testid={ `${idCustomerProd}element-card-title-${index}` }>
         {title}
       </h4>
       <div>
         <Button
           type="button"
-          data-testid={ `customer_products_button-card-rm-item-${index}` }
+          data-testid={ `${idCustomerProd}button-card-rm-item-${index}` }
           nameBtn="-"
           onClick={ handleClickDecrement }
           disabled={ disableQuantity }
         />
         <Input
-          testId={ `customer_products_input-card-quantity-${index}` }
+          testId={ `${idCustomerProd}input-card-quantity-${index}` }
           value={ quantityProducts }
         />
         <Button
-          testId={ `customer_products_button-card-add-item-${index}` }
+          testId={ `${idCustomerProd}button-card-add-item-${index}` }
           nameBtn="+"
           onClick={ handleClickIncrement }
         />
       </div>
-      <div data-testid="customer_products_button-cart">
-        total:
-        {price * quantityProducts}
+      <div data-testid={ `${idCustomerProd}button-cart` }>
+        {(price * quantityProducts).toLocaleString('pt-Br', {
+          minimumFractionDigits: 2,
+          currency: 'BRL',
+          style: 'currency',
+        })}
       </div>
     </div>
   );

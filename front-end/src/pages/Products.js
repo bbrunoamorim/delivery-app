@@ -16,7 +16,6 @@ export default function Products() {
     getProducts();
   }, [getProducts]);
 
-  console.log(products);
   return (
     <div>
       <Navbar />
@@ -28,7 +27,6 @@ export default function Products() {
             price={ price }
             urlImage={ urlImage }
             title={ name }
-            cartPrice={ 0 }
           />
         ))
       }

@@ -4,6 +4,7 @@ import Button from './Button';
 
 export default function Navbar() {
   const { user } = useContext(AppContext);
+
   return (
     <nav>
       <Button
