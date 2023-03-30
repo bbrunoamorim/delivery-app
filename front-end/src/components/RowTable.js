@@ -12,7 +12,7 @@ function RowTable({ name, quantity, price, index }) {
       <td
         data-testid={ `${testidName}-remove-${index}` }
       >
-        <input type="button" value="Remover" />
+        <input type="button" value={ index } />
       </td>
     </tr>
   );

@@ -1,54 +1,83 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Button from './Button';
+import AppContext from '../context/Context';
+import Input from './Input';
 
-export default function ProductCard({
-  index,
-  price,
-  urlImage,
-  title,
-  cartPrice,
-}) {
+export default function ProductCard({ index, price, urlImage, title }) {
+  const {
+    quantityProducts,
+    setQuantityProducts,
+    disableQuantity,
+    setDisableQuantity,
+    valorTotal,
+    setValorTotal,
+  } = useContext(AppContext);
+
+  const idCustomerProd = 'customer_products_';
+
+  const handleClickIncrement = () => {
+    setQuantityProducts(quantityProducts + 1);
+    setValorTotal(valorTotal + price * 1);
+  };
+
+  useEffect(() => {
+    if (quantityProducts > 0) {
+      setDisableQuantity(false);
+    } else {
+      setDisableQuantity(true);
+    }
+  });
+  const handleClickDecrement = () => {
+    setQuantityProducts(quantityProducts - 1);
+    setValorTotal(valorTotal - price * 1);
+  };
   return (
     <div>
-      <h3
-        data-testid={ `customer_products_element-card-price-${index}` }
-      >
-        { `R$ ${price}` }
+      <div>
+        Valor Total:
+        { valorTotal.toLocaleString('pt-Br', {
+          minimumFractionDigits: 2,
+          currency: 'BRL',
+          style: 'currency',
+        })}
+      </div>
+      <h3 data-testid={ `${idCustomerProd}element-card-price-${index}` }>
+        {`R$ ${price}`}
       </h3>
       <img
-        data-testid={ `customer_products_img-card-bg-image-${index}` }
+        data-testid={ `${idCustomerProd}img-card-bg-image-${index}` }
         src={ urlImage }
         alt={ title }
       />
-      <h4
-        data-testid={ `customer_products_element-card-title-${index}` }
-      >
-        { title }
+      <h4 data-testid={ `${idCustomerProd}element-card-title-${index}` }>
+        {title}
       </h4>
       <div>
-        <button
+        <Button
           type="button"
-          data-testid={ `customer_products_button-card-rm-item-${index}` }
-        >
-          -
-        </button>
-        <input
-          data-testid={ `customer_products_input-card-quantity-${index}` }
-          type="number"
+          data-testid={ `${idCustomerProd}button-card-rm-item-${index}` }
+          nameBtn="-"
+          onClick={ handleClickDecrement }
+          disabled={ disableQuantity }
         />
-        <button
-          type="button"
-          data-testid={ `customer_products_button-card-add-item-${index}` }
-        >
-          +
-        </button>
+        <Input
+          testId={ `${idCustomerProd}input-card-quantity-${index}` }
+          value={ quantityProducts }
+        />
+        <Button
+          testId={ `${idCustomerProd}button-card-add-item-${index}` }
+          nameBtn="+"
+          onClick={ handleClickIncrement }
+        />
       </div>
-      <button
-        type="button"
-        data-testid="customer_products_button-cart"
-      >
-        { `Ver Carrinho: R$ ${cartPrice}` }
-      </button>
+      <div data-testid={ `${idCustomerProd}button-cart` }>
+        {(price * quantityProducts).toLocaleString('pt-Br', {
+          minimumFractionDigits: 2,
+          currency: 'BRL',
+          style: 'currency',
+        })}
+      </div>
     </div>
   );
 }
@@ -58,5 +87,4 @@ ProductCard.propTypes = {
   price: PropTypes.string.isRequired,
   urlImage: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  cartPrice: PropTypes.number.isRequired,
 };
