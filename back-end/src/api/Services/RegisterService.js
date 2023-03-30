@@ -1,6 +1,8 @@
+const md5 = require('md5');
 const { UserModel } = require('../../database/models');
 
 const createUser = async (name, email, password, role) => {
+  const passHashed = md5(password);
   const alreadyUserEmail = await UserModel.findOne({
     where: { email },
   });
@@ -10,9 +12,9 @@ const createUser = async (name, email, password, role) => {
   });
 
   if (alreadyUserEmail || alreadyUserName) {
-    return { type: 409, message: 'Conflict' };
+    return { type: 409, message: 'Usuário já existe' };
   }
-  const createUsers = await UserModel.create({ name, email, password, role });
+  const createUsers = await UserModel.create({ name, email, password: passHashed, role });
   return createUsers;
 };
 
