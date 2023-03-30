@@ -14,7 +14,7 @@ export default function ProductCard({ index, price, urlImage, title }) {
     setValorTotal,
   } = useContext(AppContext);
 
-  const idCustomerProd = 'customer_products_';
+  const idCustomerProd = 'customer_products__';
 
   const handleClickIncrement = () => {
     setQuantityProducts(quantityProducts + 1);
@@ -43,7 +43,7 @@ export default function ProductCard({ index, price, urlImage, title }) {
         })}
       </div>
       <h3 data-testid={ `${idCustomerProd}element-card-price-${index}` }>
-        {`R$ ${price}`}
+        { price.replace('.', ',') }
       </h3>
       <img
         data-testid={ `${idCustomerProd}img-card-bg-image-${index}` }
@@ -56,7 +56,7 @@ export default function ProductCard({ index, price, urlImage, title }) {
       <div>
         <Button
           type="button"
-          data-testid={ `${idCustomerProd}button-card-rm-item-${index}` }
+          testId={ `${idCustomerProd}button-card-rm-item-${index}` }
           nameBtn="-"
           onClick={ handleClickDecrement }
           disabled={ disableQuantity }

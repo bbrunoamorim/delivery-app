@@ -16,7 +16,6 @@ const login = async (req, res) => {
     name: message.name,
     email: message.email,
     role: message.role,
-
   };
 
   const token = jwt.generateToken(loginValid);
