@@ -37,6 +37,7 @@ export default function Provider({ children }) {
       btnRegister,
       setBtnRegister,
     }),
+main-group-14-Register-Requisito-07
     [
       email,
       password,
@@ -49,6 +50,8 @@ export default function Provider({ children }) {
       name,
       btnRegister,
     ],
+    [email, password, btnLogin, error, products,
+      quantityProducts, disableQuantity, valorTotal], main-group-14
   );
   return <AppContext.Provider value={ context }>{children}</AppContext.Provider>;
 }
