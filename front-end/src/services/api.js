@@ -16,8 +16,14 @@ export const requestUsers = async () => {
   return data;
 };
 
-export const requestLogin = async (email, password) => {
-  const { data } = await api.post('/login', { email, password });
-
-  return data;
+export const requestLogin = async (dataset) => {
+  const config = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const response = await api.post('/login', dataset, config);
+  return response;
 };

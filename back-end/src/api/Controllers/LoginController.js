@@ -3,6 +3,7 @@ const { errorMap } = require('../utils');
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body);
 
   if (!email || !password) {
     return res.status(errorMap.mapError('FIELDS_ARE_MISSING'))
@@ -10,9 +11,9 @@ const login = async (req, res) => {
   }
   const { type } = await loginService.login(req.body);
 
-  if (type) return res.status(errorMap.mapError(type)).send();
+  if (type) return res.status(errorMap.mapError(type)).json({ message: 'Not found' });
 
-  return res.status(200).send();
+  return res.status(200).json({ message: 'User valid' });
 };
 
 module.exports = {

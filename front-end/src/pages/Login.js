@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Redirect } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
 import AppContext from '../context/Context';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -8,6 +8,7 @@ import { requestLogin } from '../services/api';
 function LoginPage() {
   const { email, setEmail, password, setPassword,
     btnLogin, setBtnLogin, error, setError } = useContext(AppContext);
+  const history = useHistory();
 
   const LOGIN = 'common_login';
   const idEmail = 'input-email';
@@ -26,7 +27,14 @@ function LoginPage() {
 
   const handleClickLogin = async () => {
     try {
-      await requestLogin(email, password);
+      const data = { email, password };
+      const response = await requestLogin(data);
+      const jsonData = response.data;
+      if (jsonData.message === 'User valid') {
+        history.push('/customer/products');
+      } else {
+        console.error('A resposta do servidor está vazia.');
+      }
     } catch (err) {
       setError(true);
     }
@@ -82,7 +90,7 @@ function LoginPage() {
       <div
         data-testid={ `${LOGIN}__${idEmailInvalid}` }
       >
-        {error && <text> Email or password incorrect. </text>}
+        {error && <p> Email or password incorrect. </p>}
       </div>
     </div>
   );
