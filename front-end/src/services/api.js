@@ -33,4 +33,7 @@ export const requestLogin = async (dataset) => {
   return response;
 };
 
-export const requestCheckout = async (data) => api.post('/checkout', data);
+export const requestCheckout = async (dataset) => {
+  const { data } = await api.post('/checkout', dataset);
+  return data.id;
+};

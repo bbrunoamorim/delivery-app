@@ -14,14 +14,14 @@ function Checkout() {
     { name: 'testrestestes', quantity: 10, price: 5 },
   ]; */
 
-  const handleClickCheckout = () => {
+  const handleClickCheckout = async () => {
     const data = {
       data: {
         products,
       },
     };
-    requestCheckout(data);
-    history.push('/register');
+    const id = await requestCheckout(data);
+    history.push(`/customer/orders/${id}`);
   };
 
   return (
