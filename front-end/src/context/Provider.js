@@ -31,7 +31,8 @@ export default function Provider({ children }) {
       valorTotal,
       setValorTotal,
     }),
-    [email, password, btnLogin, error, products, quantityProducts, disableQuantity, valorTotal],
+    [email, password, btnLogin, error, products,
+      quantityProducts, disableQuantity, valorTotal],
   );
   return <AppContext.Provider value={ context }>{children}</AppContext.Provider>;
 }
