@@ -1,16 +1,15 @@
 import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
 import Button from './Button';
+import AppContext from '../context/Context';
 
 export default function Navbar() {
-  const username = localStorage.getItem('name');
+  const { name } = useContext(AppContext);
 
   const history = useHistory();
 
   const logout = () => {
-    localStorage.removeItem('name');
-    localStorage.removeItem('email');
-    localStorage.removeItem('role');
-    localStorage.removeItem('token');
+    localStorage.removeItem('user');
 
     history.push('/login');
   };
@@ -19,24 +18,24 @@ export default function Navbar() {
     <nav>
       <Button
         type="button"
-        data-testid="customer_products_element-navbar-link-products"
-        nameBtn="PRODUTO"
+        testId="customer_products__element-navbar-link-products"
+        nameBtn="PRODUTOS"
       />
       <Button
         type="button"
-        data-testid="customer_products_element-navbar-link-orders"
+        testId="customer_products__element-navbar-link-orders"
         nameBtn="MEUS PEDIDOS"
       />
       <Button
         type="button"
-        data-testid="customer_products_element-navbar-user-full-name"
-        nameBtn={ username }
+        testId="customer_products__element-navbar-user-full-name"
+        nameBtn={ name }
       />
       <a href="/login">
         <Button
           type="button"
-          data-testid="customer_products_element-navbar-link-logout"
-          nameBtn="SAIR"
+          testId="customer_products__element-navbar-link-logout"
+          nameBtn="Sair"
           onClick={ () => logout() }
         />
       </a>
