@@ -37,8 +37,7 @@ export default function Provider({ children }) {
       btnRegister,
       setBtnRegister,
     }),
-    [
-      email,
+    [email,
       password,
       btnLogin,
       error,
