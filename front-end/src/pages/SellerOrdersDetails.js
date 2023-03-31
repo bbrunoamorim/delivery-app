@@ -1,55 +1,85 @@
-import React, { useContext, useCallback, useEffect } from 'react';
+import React, { useContext, useCallback, useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import SubtitleBar from '../components/SubtitleBar';
 import ItemOrderDetails from '../components/ItemOrderDetails';
-import { requestSales } from '../services/api';
+import { requestSales, requestSalesProducts } from '../services/api';
 import AppContext from '../context/Context';
+import StatusBar from '../components/StatusBar';
+import CustomerProductsNavbar from '../components/CustomerProductsNavbar';
 
 export default function SellerOrdersDetails() {
-  // const data = JSON.parse(localStorage.getItem('cartItens'));
-  /* // variável temporária apenas para testar */
-  const data = [
-    { name: 'testrestestes', quantity: 10, price: 5 },
-    { name: 'testrestestes', quantity: 10, price: 5 },
-    { name: 'testrestestes', quantity: 10, price: 5 },
-  ];
+  const history = useHistory();
+  const { id } = useParams();
+  const ROUTE = 'seller_order_details';
+  const TOTAL_PRICE = 'element-order-total-price';
+  // const data = [
+  //   { name: 'testrestestes', quantity: 10, price: 5 },
+  //   { name: 'testrestestes', quantity: 10, price: 5 },
+  //   { name: 'testrestestes', quantity: 10, price: 5 },
+  // ];
 
+  const [isLoading, setIsLoading] = useState(true);
   const { sales, setSales } = useContext(AppContext);
 
-  const getSales = useCallback(async () => {
-    const dataset = await requestSales();
-    setSales(dataset);
-  }, [setSales]);
+  const getSalesAndProducts = useCallback(async () => {
+    try {
+      const orderId = id;
+      const dataset = await requestSales(orderId);
+      const datasetProduct = await requestSalesProducts(orderId);
+
+      if (!dataset || !datasetProduct) history.push('/seller/orders');
+
+      const newObj = { sale: dataset, saleProducts: datasetProduct };
+      setSales(newObj);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [history, id, setSales]);
 
   useEffect(() => {
-    getSales();
-  }, [getSales]);
-  return (
+    getSalesAndProducts();
+  }, [getSalesAndProducts]);
 
+  const nome = 'Lucas';
+  console.log(sales);
+  return (
     <div>
+      <CustomerProductsNavbar name={ nome } />
       <h1>Detalhe do Pedido</h1>
-      <table>
-        <SubtitleBar />
-        {
-          data.map(({ name, quantity, price }, index) => (
-            <ItemOrderDetails
-              key={ index }
-              name={ name }
-              quantity={ quantity }
-              price={ price }
-              index={ index }
-            />
-          ))
-        }
-      </table>
-      <div data-testid="customer_checkout__element-order-total-price">
-        <text>
-          Total:
-          {
-            data.reduce((acc, cur) => acc + (cur.price * cur.quantity), 0)
-              .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-          }
-        </text>
-      </div>
+      {isLoading ? (
+        <p>Carregando...</p>
+      ) : (
+        <>
+          <StatusBar
+            order={ sales.sale.id }
+            date={ sales.sale.saleDate }
+            status={ sales.sale.status }
+          />
+          <table>
+            <SubtitleBar />
+            {sales.saleProducts
+              .map(({ product: { name }, quantity, product: { price } }, index) => (
+                <ItemOrderDetails
+                  key={ index }
+                  name={ name }
+                  quantity={ quantity }
+                  price={ price }
+                  index={ index }
+                />
+              ))}
+          </table>
+          <div>
+            <p data-testid={ `${ROUTE}__${TOTAL_PRICE}` }>
+              Total:
+              {sales.saleProducts
+                .reduce((acc, cur) => acc + cur.product.price * cur.quantity, 0)
+                .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+            </p>
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -38,7 +38,12 @@ export const requestCheckout = async (dataset) => {
   return data.id;
 };
 
-export const requestSales = async () => {
-  const { data } = await api.get('/sales');
+export const requestSales = async (orderId) => {
+  const { data } = await api.get(`/orders/${orderId}`);
+  return data;
+};
+
+export const requestSalesProducts = async (orderId) => {
+  const { data } = await api.get(`orders/products/${orderId}`);
   return data;
 };

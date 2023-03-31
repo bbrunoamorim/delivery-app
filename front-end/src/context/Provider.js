@@ -14,6 +14,7 @@ export default function Provider({ children }) {
   const [disableQuantity, setDisableQuantity] = useState(true);
   const [valorTotal, setValorTotal] = useState(0);
   const [sales, setSales] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const context = useMemo(
     () => ({
@@ -39,9 +40,11 @@ export default function Provider({ children }) {
       setName,
       btnRegister,
       setBtnRegister,
+      isLoading,
+      setIsLoading,
     }),
     [email, password, btnLogin, error, products, sales,
-      quantityProducts, disableQuantity, valorTotal, name, btnRegister],
+      quantityProducts, disableQuantity, valorTotal, name, btnRegister, isLoading],
   );
   return <AppContext.Provider value={ context }>{children}</AppContext.Provider>;
 }

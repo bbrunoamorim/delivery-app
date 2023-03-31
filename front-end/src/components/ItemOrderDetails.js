@@ -1,15 +1,28 @@
 import PropTypes from 'prop-types';
 
 export default function ItemOrderDetails({ name, quantity, price, index }) {
-  const testidName = 'customer_products__element-order-table';
+  const ROUTE = 'seller_order_details';
+  const ITEM_NUMBER = 'element-order-table-item-number';
+  const NAME = 'element-order-table-name';
+  const QUANTITY = 'element-order-table-quantity';
+  const UNIT_PRICE = 'element-order-table-unit-price';
+  const SUB_TOTAL = 'element-order-table-sub-total';
   return (
     <tbody>
       <tr>
-        <td data-testid={ `${testidName}-item-number-${index}` }>{ index + 1 }</td>
-        <td data-testid={ `${testidName}-name-${index}` }>{ name }</td>
-        <td data-testid={ `${testidName}-quantity-${index}` }>{ quantity }</td>
-        <td data-testid={ `${testidName}-unit-price-${index}` }>{ price }</td>
-        <td data-testid={ `${testidName}-sub-total-${index}` }>{ quantity * price }</td>
+        <td data-testid={ `${ROUTE}__${ITEM_NUMBER}-${index}` }>{ index + 1 }</td>
+        <td data-testid={ `${ROUTE}__${NAME}-${index}` }>{ name }</td>
+        <td data-testid={ `${ROUTE}__${QUANTITY}-${index}` }>{ quantity }</td>
+        <td data-testid={ `${ROUTE}__${UNIT_PRICE}-${index}` }>
+          {(price)
+            .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+
+        </td>
+        <td data-testid={ `${ROUTE}__${SUB_TOTAL}-${index}` }>
+          { (quantity * price)
+            .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }
+
+        </td>
       </tr>
     </tbody>
   );
