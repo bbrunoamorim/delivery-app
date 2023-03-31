@@ -4,22 +4,13 @@ import Button from './Button';
 import AppContext from '../context/Context';
 import Input from './Input';
 
-export default function ProductCard({
-  index,
-  price,
-  urlImage,
-  title,
-  onInputChange,
-  id,
-  totalValue,
-}) {
+export default function ProductCard({ index, price, urlImage, title }) {
   const {
     products,
     setProducts,
     inputValue,
     setInputValue,
     setValorTotal,
-    valorTotal,
     handleInputValue,
   } = useContext(AppContext);
 
@@ -39,9 +30,6 @@ export default function ProductCard({
   };
   const value = inputValue[index] || 0;
 
-  const onChangeInput = ({ target }) => {
-    handleInputValue(index, target.value);
-  };
   useEffect(() => {
     const storedItems = JSON.parse(localStorage.getItem('cart'));
     if (storedItems) {
@@ -55,7 +43,7 @@ export default function ProductCard({
         return {
           ...item,
           quantity: newQuantity,
-          totalValue: newQuantity * price,
+          totalValue: (newQuantity * price).toFixed(2),
         };
       }
       return item;
@@ -64,23 +52,52 @@ export default function ProductCard({
     localStorage.setItem('cart', JSON.stringify(newProducts));
   };
 
+  const updateCartValue = () => {
+    const allProducts = JSON.parse(localStorage.getItem('cart'));
+    const cartValue = allProducts.reduce(
+      (acc, { totalValue }) => Number(totalValue) + acc,
+      0,
+    );
+    setValorTotal(cartValue);
+  };
+  const updateAll = (position, newQuantity) => {
+    if (newQuantity < 0) newQuantity = 0;
+    updateItemQuantity(position, newQuantity);
+    setInputValue((prevState) => ({
+      ...prevState,
+      [position]: +newQuantity,
+    }));
+    updateCartValue();
+  };
+
+  const onChangeInput = ({ target }) => {
+    const num = Number(target.value);
+    handleInputValue(index, num);
+    updateAll(index, num);
+  };
+
   const handleClickIncrement = (position) => {
     const quantityValue = products
-      .find((item) => item.id === position).quantity + Number(value);
-    updateItemQuantity(position, quantityValue);
+      .find((item) => item.id === position).quantity;
+    const newQuantity = quantityValue + 1;
+    updateAll(position, newQuantity);
   };
 
   const handleClickDecrement = (position) => {
-    const quantityValue = products
-      .find((item) => item.id === position).quantity - Number(value);
-    updateItemQuantity(position, quantityValue);
+    const quantityValue = products.find(
+      (item) => item.id === position,
+    ).quantity;
+    const newQuantity = quantityValue - 1;
+    updateItemQuantity(position, newQuantity);
+    updateAll(position, newQuantity);
   };
   return (
     <div>
       <h3 data-testid={ `${idCustomerProd}element-card-price-${index}` }>
-        { price.replace('.', ',') }
+        {price.replace('.', ',')}
       </h3>
       <img
+        width="50px"
         data-testid={ `${idCustomerProd}img-card-bg-image-${index}` }
         src={ urlImage }
         alt={ title }
@@ -90,8 +107,6 @@ export default function ProductCard({
       </h4>
       <div>
         <Button
-          data-testid={ `${idCustomerProd}button-card-rm-item-${index}` }
-          type="button"
           testId={ `${idCustomerProd}button-card-rm-item-${index}` }
           nameBtn="-"
           onClick={ () => handleClickDecrement(index) }

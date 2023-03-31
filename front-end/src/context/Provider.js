@@ -49,6 +49,9 @@ export default function Provider({ children }) {
       setName,
       btnRegister,
       setBtnRegister,
+      inputValue,
+      setInputValue,
+      handleInputValue,
     }),
     [
       email,
@@ -62,9 +65,18 @@ export default function Provider({ children }) {
       inputValue,
       name,
       btnRegister,
+      inputValue,
     ],
-    [email, password, btnLogin, error, products,
-      quantityProducts, disableQuantity, valorTotal],
+    [
+      email,
+      password,
+      btnLogin,
+      error,
+      products,
+      quantityProducts,
+      disableQuantity,
+      valorTotal,
+    ],
   );
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
 }

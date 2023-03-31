@@ -8,9 +8,9 @@ import Button from '../components/Button';
 // import Button from '../components/Button';
 
 export default function Products() {
-  const { products, setProducts, setValorTotal, valorTotal } = useContext(AppContext);
+  const { products, setProducts, valorTotal } = useContext(AppContext);
   const history = useHistory();
-  const idCustomerProd = 'customer_products_';
+  const idCustomerProd = 'customer_products__';
 
   const getProducts = useCallback(async () => {
     const data = await requestProducts();
@@ -21,18 +21,10 @@ export default function Products() {
   useEffect(() => {
     getProducts();
   }, [getProducts]);
+
   const handleClickCheckout = () => {
     history.push('/customer/checkout');
   };
-
-  // const updateCartValue = () => {
-  //   const allProducts = JSON.parse(localStorage.getItem('cart'));
-  //   const cartValue = allProducts.reduce(
-  //     (acc, { totalValue }) => Number(totalValue) + acc,
-  //     0,
-  //   );
-  //   setValorTotal(cartValue);
-  // };
 
   return (
     <div>
@@ -47,13 +39,18 @@ export default function Products() {
         />
       ))}
       <Button
-        data-testid={ `${idCustomerProd}button-cart` }
+        testId={ `${idCustomerProd}button-cart` }
+        disabled={ valorTotal === 0 }
         onClick={ handleClickCheckout }
-        nameBtn={ `Ver Carrinho: ${valorTotal.toLocaleString('pt-Br', {
-          minimumFractionDigits: 2,
-          currency: 'BRL',
-          style: 'currency',
-        })}` }
+        nameBtn={
+          <p
+            data-testid={ `${idCustomerProd}checkout-bottom-value` }
+          >
+            {`${(Math.round(valorTotal * 100) / 100)
+              .toFixed(2).replace('.', ',')}`}
+
+          </p>
+        }
       />
     </div>
   );
