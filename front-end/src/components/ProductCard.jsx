@@ -6,46 +6,98 @@ import Input from './Input';
 
 export default function ProductCard({ index, price, urlImage, title }) {
   const {
-    quantityProducts,
-    setQuantityProducts,
-    disableQuantity,
-    setDisableQuantity,
-    valorTotal,
+    products,
+    setProducts,
+    inputValue,
+    setInputValue,
     setValorTotal,
+    handleInputValue,
   } = useContext(AppContext);
 
   const idCustomerProd = 'customer_products__';
 
-  const handleClickIncrement = () => {
-    setQuantityProducts(quantityProducts + 1);
-    setValorTotal(valorTotal + price * 1);
+  const handleKeyPress = (event) => {
+    const EIGHT = 8;
+    const events = event.keyCode || event.which;
+    const keyValue = String.fromCharCode(events);
+    const regex = /^[a-zA-Z\W]+$/;
+    if (events === EIGHT) {
+      return;
+    }
+    if (regex.test(keyValue)) {
+      event.preventDefault();
+    }
   };
+  const value = inputValue[index] || 0;
 
   useEffect(() => {
-    if (quantityProducts > 0) {
-      setDisableQuantity(false);
-    } else {
-      setDisableQuantity(true);
+    const storedItems = JSON.parse(localStorage.getItem('cart'));
+    if (storedItems) {
+      setProducts(storedItems);
     }
-  });
-  const handleClickDecrement = () => {
-    setQuantityProducts(quantityProducts - 1);
-    setValorTotal(valorTotal - price * 1);
+  }, [setProducts]);
+
+  const updateItemQuantity = (itemid, newQuantity) => {
+    const newProducts = products.map((item) => {
+      if (item.id === itemid) {
+        return {
+          ...item,
+          quantity: newQuantity,
+          totalValue: (newQuantity * price).toFixed(2),
+        };
+      }
+      return item;
+    });
+    setProducts(newProducts);
+    localStorage.setItem('cart', JSON.stringify(newProducts));
+  };
+
+  const updateCartValue = () => {
+    const allProducts = JSON.parse(localStorage.getItem('cart'));
+    const cartValue = allProducts.reduce(
+      (acc, { totalValue }) => Number(totalValue) + acc,
+      0,
+    );
+    setValorTotal(cartValue);
+  };
+  const updateAll = (position, newQuantity) => {
+    if (newQuantity < 0) newQuantity = 0;
+    updateItemQuantity(position, newQuantity);
+    setInputValue((prevState) => ({
+      ...prevState,
+      [position]: +newQuantity,
+    }));
+    updateCartValue();
+  };
+
+  const onChangeInput = ({ target }) => {
+    const num = Number(target.value);
+    handleInputValue(index, num);
+    updateAll(index, num);
+  };
+
+  const handleClickIncrement = (position) => {
+    const quantityValue = products
+      .find((item) => item.id === position).quantity;
+    const newQuantity = quantityValue + 1;
+    updateAll(position, newQuantity);
+  };
+
+  const handleClickDecrement = (position) => {
+    const quantityValue = products.find(
+      (item) => item.id === position,
+    ).quantity;
+    const newQuantity = quantityValue - 1;
+    updateItemQuantity(position, newQuantity);
+    updateAll(position, newQuantity);
   };
   return (
     <div>
-      <div>
-        Valor Total:
-        { valorTotal.toLocaleString('pt-Br', {
-          minimumFractionDigits: 2,
-          currency: 'BRL',
-          style: 'currency',
-        })}
-      </div>
       <h3 data-testid={ `${idCustomerProd}element-card-price-${index}` }>
-        { price.replace('.', ',') }
+        {price.replace('.', ',')}
       </h3>
       <img
+        width="50px"
         data-testid={ `${idCustomerProd}img-card-bg-image-${index}` }
         src={ urlImage }
         alt={ title }
@@ -55,28 +107,22 @@ export default function ProductCard({ index, price, urlImage, title }) {
       </h4>
       <div>
         <Button
-          type="button"
           testId={ `${idCustomerProd}button-card-rm-item-${index}` }
           nameBtn="-"
-          onClick={ handleClickDecrement }
-          disabled={ disableQuantity }
+          onClick={ () => handleClickDecrement(index) }
         />
         <Input
+          onChange={ onChangeInput }
+          onKeyDown={ handleKeyPress }
           testId={ `${idCustomerProd}input-card-quantity-${index}` }
-          value={ quantityProducts }
+          value={ value }
         />
         <Button
+          id={ index }
           testId={ `${idCustomerProd}button-card-add-item-${index}` }
           nameBtn="+"
-          onClick={ handleClickIncrement }
+          onClick={ () => handleClickIncrement(index) }
         />
-      </div>
-      <div data-testid={ `${idCustomerProd}button-cart` }>
-        {(price * quantityProducts).toLocaleString('pt-Br', {
-          minimumFractionDigits: 2,
-          currency: 'BRL',
-          style: 'currency',
-        })}
       </div>
     </div>
   );
