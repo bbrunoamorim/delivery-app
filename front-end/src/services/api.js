@@ -37,3 +37,8 @@ export const requestCheckout = async (dataset) => {
   const { data } = await api.post('/checkout', dataset);
   return data.id;
 };
+
+export const requestSales = async () => {
+  const { data } = await api.get('/sales');
+  return data;
+};
