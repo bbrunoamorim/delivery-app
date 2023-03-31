@@ -1,8 +1,10 @@
-import React, { useState, useMemo } from 'react';
-import propTypes from 'prop-types';
-import AppContext from './Context';
+import React, { useState, useMemo } from "react";
+import propTypes from "prop-types";
+import AppContext from "./Context";
 
 export default function Provider({ children }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -40,6 +42,9 @@ export default function Provider({ children }) {
       setDisableQuantity,
       valorTotal,
       setValorTotal,
+      inputValue,
+      setInputValue,
+      handleInputValue,
       name,
       setName,
       btnRegister,
@@ -57,6 +62,7 @@ export default function Provider({ children }) {
       quantityProducts,
       disableQuantity,
       valorTotal,
+      inputValue,
       name,
       btnRegister,
       inputValue,
@@ -72,7 +78,7 @@ export default function Provider({ children }) {
       valorTotal,
     ],
   );
-  return <AppContext.Provider value={ context }>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
 }
 
 Provider.propTypes = {
