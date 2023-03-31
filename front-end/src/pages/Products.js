@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { requestProducts } from '../services/api';
 import ProductCard from '../components/ProductCard';
