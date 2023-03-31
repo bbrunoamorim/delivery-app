@@ -10,11 +10,19 @@ export default function Provider({ children }) {
   const [btnRegister, setBtnRegister] = useState(true);
   const [error, setError] = useState(false);
   const [products, setProducts] = useState([]);
-  const [quantityProducts, setQuantityProducts] = useState(0);
+  const [quantityProducts, setQuantityProducts] = useState({});
   const [disableQuantity, setDisableQuantity] = useState(true);
   const [valorTotal, setValorTotal] = useState(0);
   const [sales, setSales] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [inputValue, setInputValue] = useState({});
+
+  const handleInputValue = (id, value) => {
+    setInputValue((prevstate) => ({
+      ...prevstate,
+      [id]: value,
+    }));
+  };
 
   const context = useMemo(
     () => ({
@@ -36,6 +44,9 @@ export default function Provider({ children }) {
       setDisableQuantity,
       valorTotal,
       setValorTotal,
+      inputValue,
+      setInputValue,
+      handleInputValue,
       name,
       setName,
       btnRegister,
@@ -44,7 +55,10 @@ export default function Provider({ children }) {
       setIsLoading,
     }),
     [email, password, btnLogin, error, products, sales,
-      quantityProducts, disableQuantity, valorTotal, name, btnRegister, isLoading],
+      quantityProducts, disableQuantity, valorTotal, name, btnRegister, isLoading,
+      inputValue,
+      setInputValue,
+      handleInputValue],
   );
   return <AppContext.Provider value={ context }>{children}</AppContext.Provider>;
 }

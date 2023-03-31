@@ -10,6 +10,7 @@ export default function Navbar() {
 
   const logout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('cart');
 
     history.push('/login');
   };
