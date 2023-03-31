@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-const TOKEN_SECRET = process.env.JWT_SECRET || 'paodequeijo';
+const TOKEN_SECRET = require('fs')
+  .readFileSync('jwt.evaluation.key', { encoding: 'utf-8' });
 
 const jwtConfig = {
   expiresIn: '30d',
@@ -9,7 +10,7 @@ const jwtConfig = {
 
 const generateToken = (payload) => {
   try {
-    return jwt.sign(payload.dataValues, TOKEN_SECRET, jwtConfig);
+    return jwt.sign(payload, TOKEN_SECRET, jwtConfig);
   } catch (error) {
     throw new Error('Falha ao gerar token');
   }

@@ -23,7 +23,7 @@ export default function ProductCard({
     handleInputValue,
   } = useContext(AppContext);
 
-  const idCustomerProd = 'customer_products_';
+  const idCustomerProd = 'customer_products__';
 
   const handleKeyPress = (event) => {
     const EIGHT = 8;
@@ -78,7 +78,7 @@ export default function ProductCard({
   return (
     <div>
       <h3 data-testid={ `${idCustomerProd}element-card-price-${index}` }>
-        {`R$ ${price}`}
+        { price.replace('.', ',') }
       </h3>
       <img
         data-testid={ `${idCustomerProd}img-card-bg-image-${index}` }
@@ -91,6 +91,8 @@ export default function ProductCard({
       <div>
         <Button
           data-testid={ `${idCustomerProd}button-card-rm-item-${index}` }
+          type="button"
+          testId={ `${idCustomerProd}button-card-rm-item-${index}` }
           nameBtn="-"
           onClick={ () => handleClickDecrement(index) }
         />

@@ -1,4 +1,4 @@
-import RowTable from './RowTable';
+import RowTable from './CheckoutRowTable';
 
 function Table() {
   // const data = JSON.parse(localStorage.getItem('cartItens'));

@@ -7,7 +7,7 @@ import { requestLogin } from '../services/api';
 
 function LoginPage() {
   const { email, setEmail, password, setPassword,
-    btnLogin, setBtnLogin, error, setError } = useContext(AppContext);
+    btnLogin, setBtnLogin, error, setError, setName } = useContext(AppContext);
   const history = useHistory();
 
   const LOGIN = 'common_login';
@@ -25,12 +25,27 @@ function LoginPage() {
     setEmail(target.value);
   };
 
+  const setLocalStorageData = async () => {
+    try {
+      const {
+        data: { message: { name, role, token } },
+      } = await requestLogin({ email, password });
+
+      const user = { name, email, role, token };
+
+      localStorage.setItem('user', JSON.stringify(user));
+
+      setName(name);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleClickLogin = async () => {
     try {
-      const data = { email, password };
-      const response = await requestLogin(data);
-      const jsonData = response.data;
-      if (jsonData.message === 'User valid') {
+      const { data } = await requestLogin({ email, password });
+      if (data.message !== 'Not found' && data.message.token) {
+        await setLocalStorageData();
         history.push('/customer/products');
       } else {
         console.error('A resposta do servidor está vazia.');

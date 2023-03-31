@@ -5,7 +5,11 @@ import AppContext from "./Context";
 export default function Provider({ children }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
   const [btnLogin, setBtnLogin] = useState(true);
+  const [btnRegister, setBtnRegister] = useState(true);
   const [error, setError] = useState(false);
   const [products, setProducts] = useState([]);
   const [quantityProducts, setQuantityProducts] = useState({});
@@ -41,6 +45,10 @@ export default function Provider({ children }) {
       inputValue,
       setInputValue,
       handleInputValue,
+      name,
+      setName,
+      btnRegister,
+      setBtnRegister,
     }),
     [
       email,
@@ -52,7 +60,11 @@ export default function Provider({ children }) {
       disableQuantity,
       valorTotal,
       inputValue,
-    ]
+      name,
+      btnRegister,
+    ],
+    [email, password, btnLogin, error, products,
+      quantityProducts, disableQuantity, valorTotal],
   );
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
 }
