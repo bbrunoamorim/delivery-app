@@ -1,18 +1,14 @@
 import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
 import Table from '../components/CheckoutTable';
 import AddAddress from '../components/CheckoutAddAddress';
 import { requestCheckout } from '../services/api';
+import AppContext from '../context/Context';
 
 function Checkout() {
   const history = useHistory();
-  const products = JSON.parse(localStorage.getItem('cartItens'));
-
-  /* // variável temporária apenas para testar
-  const data = [
-    { name: 'testrestestes', quantity: 10, price: 5 },
-    { name: 'testrestestes', quantity: 10, price: 5 },
-    { name: 'testrestestes', quantity: 10, price: 5 },
-  ]; */
+  const { products } = useContext(AppContext);
+  const { valorTotal } = useContext(AppContext);
 
   const handleClickCheckout = async () => {
     const data = {
@@ -30,9 +26,7 @@ function Checkout() {
         <h1>Finalizar Pedido</h1>
         <Table />
         <div data-testid="customer_checkout__element-order-total-price">
-          {
-            products.reduce((acc, cur) => acc + (cur.price * cur.quantity), 0)
-          }
+          {(Math.round(valorTotal * 100) / 100).toFixed(2).replace('.', ',')}
         </div>
       </div>
       <div>

@@ -1,6 +1,7 @@
 function AddAddress() {
-  const users = localStorage.getItem('users');
-  const sellers = users.filter((user) => user.role === 'seller');
+  const users = localStorage.getItem('user');
+  const usersArr = [...users];
+  const sellers = usersArr.filter((user) => user.role === 'seller');
   const testidName = 'customer_checkout__';
   return (
     <div>
