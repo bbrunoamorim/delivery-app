@@ -21,7 +21,9 @@ function RowTable({ name, quantity, price, index, id }) {
 
   const handleClickRemoveProduct = (itemId) => {
     const selectedProducts = JSON.parse(localStorage.getItem('cart'));
-    const updateItemsCheckout = selectedProducts.filter((item) => item.id !== itemId);
+    const updateItemsCheckout = selectedProducts.filter(
+      (item) => item.id !== itemId,
+    );
     localStorage.setItem('cart', JSON.stringify(updateItemsCheckout));
     updateCheckoutValue(updateItemsCheckout);
   };
@@ -38,9 +40,9 @@ function RowTable({ name, quantity, price, index, id }) {
         {(Math.round(quantity * price * 100) / 100)
           .toFixed(2)
           .replace('.', ',')}
-      </td>
-      <td data-testid={ `${testidName}-remove-${index}` }>
+
         <Button
+          testId={ `${testidName}-remove-${index}` }
           type="button"
           nameBtn="X"
           onClick={ () => handleClickRemoveProduct(id) }

@@ -8,9 +8,11 @@ function AddAddress() {
       <div>
         <p>P. Vendedora Responsável</p>
         <select data-testid={ `${testidName}select-seller` }>
-          {
-            sellers.map(({ name, id }) => <option key={ id } value={ id }>{name}</option>)
-          }
+          {sellers.map(({ name, id }) => (
+            <option key={ id } value={ id }>
+              {name}
+            </option>
+          ))}
         </select>
       </div>
       <div>

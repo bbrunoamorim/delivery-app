@@ -1,10 +1,7 @@
-import { useContext } from 'react';
-import AppContext from '../context/Context';
-import RowTable from './CheckoutRowTable';
+import RowTable from "./CheckoutRowTable";
 
 function Table() {
- 
-  const selectedProducts = JSON.parse(localStorage.getItem('cart'))
+  const selectedProducts = JSON.parse(localStorage.getItem("cart"));
   const finalProducts = selectedProducts.filter(({ quantity }) => quantity > 0);
 
   return (
@@ -20,18 +17,16 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {
-          finalProducts.map(({ name, quantity, price, id }, index) => (
-            <RowTable
-              key={ index }
-              name={ name }
-              quantity={ quantity }
-              price={ price }
-              index={ index }
-              id={ id }
-            />
-          ))
-        }
+        {finalProducts.map(({ name, quantity, price, id }, index) => (
+          <RowTable
+            key={index}
+            name={name}
+            quantity={quantity}
+            price={price}
+            index={index}
+            id={id}
+          />
+        ))}
       </tbody>
     </table>
   );
