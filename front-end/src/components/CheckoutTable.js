@@ -19,7 +19,7 @@ function Table() {
       <tbody>
         {finalProducts.map(({ name, quantity, price, id }, index) => (
           <RowTable
-            key={ index } 
+            key={ index }
             name={ name }
             quantity={ quantity }
             price={ price }
