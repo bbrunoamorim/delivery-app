@@ -1,13 +1,11 @@
-import React, { useState, useMemo } from "react";
-import propTypes from "prop-types";
-import AppContext from "./Context";
+import React, { useState, useMemo } from 'react';
+import propTypes from 'prop-types';
+import AppContext from './Context';
 
 export default function Provider({ children }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [btnLogin, setBtnLogin] = useState(true);
   const [btnRegister, setBtnRegister] = useState(true);
   const [error, setError] = useState(false);
@@ -49,24 +47,9 @@ export default function Provider({ children }) {
       setName,
       btnRegister,
       setBtnRegister,
-      inputValue,
-      setInputValue,
-      handleInputValue,
     }),
-    [
-      email,
-      password,
-      btnLogin,
-      error,
-      products,
-      quantityProducts,
-      disableQuantity,
-      valorTotal,
-      inputValue,
-      name,
-      btnRegister,
-      inputValue,
-    ],
+    [email, password, btnLogin, error, products, quantityProducts,
+      disableQuantity, valorTotal, inputValue, name, btnRegister],
     [
       email,
       password,
@@ -78,7 +61,7 @@ export default function Provider({ children }) {
       valorTotal,
     ],
   );
-  return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
+  return <AppContext.Provider value={ context }>{children}</AppContext.Provider>;
 }
 
 Provider.propTypes = {
