@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.get('/:id', SalesController.getSaleById);
 router.get('/products/:id', SalesProductsController.getSalesProductsById);
+router.patch('/update', SalesController.updateStatus); 
 
 module.exports = router;

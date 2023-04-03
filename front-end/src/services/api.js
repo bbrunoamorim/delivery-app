@@ -47,3 +47,16 @@ export const requestSalesProducts = async (orderId) => {
   const { data } = await api.get(`orders/products/${orderId}`);
   return data;
 };
+
+export const updateSaleStatus = async (id, status) => {
+  const config = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const dataset = { id, status };
+  const { data } = await api.patch('orders/update', dataset, config);
+  return data;
+};

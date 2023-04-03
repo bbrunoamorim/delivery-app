@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import propTypes from 'prop-types';
 import AppContext from './Context';
 
@@ -17,12 +17,12 @@ export default function Provider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState({});
 
-  const handleInputValue = (id, value) => {
+  const handleInputValue = useCallback((id, value) => {
     setInputValue((prevstate) => ({
       ...prevstate,
       [id]: value,
     }));
-  };
+  }, [setInputValue]);
 
   const context = useMemo(
     () => ({
