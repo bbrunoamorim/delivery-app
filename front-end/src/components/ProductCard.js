@@ -68,6 +68,7 @@ export default function ProductCard({ index, price, urlImage, title }) {
     );
     setValorTotal(cartValue);
   };
+
   const updateAll = (position, newQuantity) => {
     if (newQuantity < 0) newQuantity = 0;
     updateItemQuantity(position, newQuantity);
