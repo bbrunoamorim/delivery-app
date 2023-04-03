@@ -17,7 +17,19 @@ const findAll = async (req, res) => {
   return res.status(200).json(allUsers);
 };
 
+const createAdm = async (req, res) => {
+  const { name, email, password, role } = req.body;
+  console.log(req.body);
+  const newUser = await RegisterService.createAdm(name, email, password, role);
+
+  if (!newUser.type) {
+    return res.status(201).json(newUser);
+  }
+  return res.status(newUser.type).json({ message: newUser.message });
+};
+
 module.exports = {
   createUser,
   findAll,
+  createAdm,
 };

@@ -55,7 +55,10 @@ function LoginPage() {
   const handleClickLogin = async () => {
     try {
       const { data } = await requestLogin({ email, password });
-      if (data.message !== 'Not found' && data.message.token) {
+      console.log(data);
+      if (data.message.role !== 'customer') {
+        history.push('/admin/manage');
+      } else if (data.message !== 'Not found' && data.message.token) {
         await setLocalStorageData();
         history.push('/customer/products');
       } else {

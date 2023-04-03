@@ -4,6 +4,7 @@ const RegisterRouter = require('./Routes/RegisterRoutes');
 const LoginRouter = require('./Routes/loginRoutes');
 const ProductRouter = require('./Routes/ProductRoutes');
 const CheckoutRouter = require('./Routes/checkoutRoutes');
+const RegisterAdmRouter = require('./Routes/RegisterAdmRouter');
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.static('public'));
 
 app.use('/register', RegisterRouter);
+app.use('/admin/manage', RegisterAdmRouter);
 app.use('/login', LoginRouter);
 app.use('/products', ProductRouter);
 app.use('/checkout', CheckoutRouter);

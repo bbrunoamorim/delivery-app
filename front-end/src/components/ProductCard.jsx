@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
 import AppContext from '../context/Context';
@@ -29,13 +29,6 @@ export default function ProductCard({ index, price, urlImage, title }) {
     }
   };
   const value = inputValue[index] || 0;
-
-  useEffect(() => {
-    const storedItems = JSON.parse(localStorage.getItem('cart'));
-    if (storedItems) {
-      setProducts(storedItems);
-    }
-  }, [setProducts]);
 
   const updateItemQuantity = (itemid, newQuantity) => {
     const newProducts = products.map((item) => {
