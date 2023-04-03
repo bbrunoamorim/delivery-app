@@ -4,8 +4,8 @@ import AppContext from './Context';
 
 export default function Provider({ children }) {
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [btnLogin, setBtnLogin] = useState(true);
   const [btnRegister, setBtnRegister] = useState(true);
   const [error, setError] = useState(false);
@@ -56,9 +56,7 @@ export default function Provider({ children }) {
     }),
     [email, password, btnLogin, error, products, sales,
       quantityProducts, disableQuantity, valorTotal, name, btnRegister, isLoading,
-      inputValue,
-      setInputValue,
-      handleInputValue],
+      inputValue, setInputValue, handleInputValue],
   );
   return <AppContext.Provider value={ context }>{children}</AppContext.Provider>;
 }

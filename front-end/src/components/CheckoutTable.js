@@ -1,14 +1,8 @@
 import RowTable from './CheckoutRowTable';
 
 function Table() {
-  // const data = JSON.parse(localStorage.getItem('cartItens'));
-
-  // variável temporária apenas para testar
-  const data = [
-    { name: 'testrestestes', quantity: 10, price: 5 },
-    { name: 'testrestestes', quantity: 10, price: 5 },
-    { name: 'testrestestes', quantity: 10, price: 5 },
-  ];
+  const selectedProducts = JSON.parse(localStorage.getItem('cart'));
+  const finalProducts = selectedProducts.filter(({ quantity }) => quantity > 0);
 
   return (
     <table>
@@ -23,17 +17,16 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {
-          data.map(({ name, quantity, price }, index) => (
-            <RowTable
-              key={ index }
-              name={ name }
-              quantity={ quantity }
-              price={ price }
-              index={ index }
-            />
-          ))
-        }
+        {finalProducts.map(({ name, quantity, price, id }, index) => (
+          <RowTable
+            key={ index }
+            name={ name }
+            quantity={ quantity }
+            price={ price }
+            index={ index }
+            id={ id }
+          />
+        ))}
       </tbody>
     </table>
   );

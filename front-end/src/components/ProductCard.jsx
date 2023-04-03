@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
 import AppContext from '../context/Context';
@@ -30,26 +30,27 @@ export default function ProductCard({ index, price, urlImage, title }) {
   };
   const value = inputValue[index] || 0;
 
-  useEffect(() => {
-    const storedItems = JSON.parse(localStorage.getItem('cart'));
-    if (storedItems) {
-      setProducts(storedItems);
-    }
-  }, [setProducts]);
-
   const updateItemQuantity = (itemid, newQuantity) => {
     const newProducts = products.map((item) => {
       if (item.id === itemid) {
-        return {
+        const itemUpdated = {
           ...item,
           quantity: newQuantity,
           totalValue: (newQuantity * price).toFixed(2),
         };
+        if (itemUpdated.quantity !== item.quantity) {
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+          const updatedCart = cart.filter((cartItem) => cartItem.id !== itemid);
+          updatedCart.push(itemUpdated);
+          localStorage.setItem('cart', JSON.stringify(updatedCart));
+        }
+
+        return itemUpdated;
       }
+
       return item;
     });
     setProducts(newProducts);
-    localStorage.setItem('cart', JSON.stringify(newProducts));
   };
 
   const updateCartValue = () => {
@@ -77,8 +78,9 @@ export default function ProductCard({ index, price, urlImage, title }) {
   };
 
   const handleClickIncrement = (position) => {
-    const quantityValue = products
-      .find((item) => item.id === position).quantity;
+    const quantityValue = products.find(
+      (item) => item.id === position,
+    ).quantity;
     const newQuantity = quantityValue + 1;
     updateAll(position, newQuantity);
   };

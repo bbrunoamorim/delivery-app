@@ -6,8 +6,17 @@ import Button from '../components/Button';
 import { requestLogin } from '../services/api';
 
 function LoginPage() {
-  const { email, setEmail, password, setPassword,
-    btnLogin, setBtnLogin, error, setError, setName } = useContext(AppContext);
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    btnLogin,
+    setBtnLogin,
+    error,
+    setError,
+    setName,
+  } = useContext(AppContext);
   const history = useHistory();
 
   const LOGIN = 'common_login';
@@ -28,7 +37,9 @@ function LoginPage() {
   const setLocalStorageData = async () => {
     try {
       const {
-        data: { message: { name, role, token } },
+        data: {
+          message: { name, role, token },
+        },
       } = await requestLogin({ email, password });
 
       const user = { name, email, role, token };
@@ -44,7 +55,10 @@ function LoginPage() {
   const handleClickLogin = async () => {
     try {
       const { data } = await requestLogin({ email, password });
-      if (data.message !== 'Not found' && data.message.token) {
+      console.log(data);
+      if (data.message.role !== 'customer') {
+        history.push('/admin/manage');
+      } else if (data.message !== 'Not found' && data.message.token) {
         await setLocalStorageData();
         history.push('/customer/products');
       } else {
@@ -59,7 +73,7 @@ function LoginPage() {
     const verifyLogin = () => {
       const regex = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z.]*\w$/;
       const MIN_LENGTH = 5;
-      return (regex.test(email) && password.length > MIN_LENGTH);
+      return regex.test(email) && password.length > MIN_LENGTH;
     };
     if (verifyLogin()) {
       setBtnLogin(false);
@@ -93,7 +107,6 @@ function LoginPage() {
           disabled={ btnLogin }
           nameBtn="Login"
           onClick={ handleClickLogin }
-
         />
         <Button
           type="submit"
@@ -102,9 +115,7 @@ function LoginPage() {
           onClick={ handleClickRegister }
         />
       </form>
-      <div
-        data-testid={ `${LOGIN}__${idEmailInvalid}` }
-      >
+      <div data-testid={ `${LOGIN}__${idEmailInvalid}` }>
         {error && <p> Email or password incorrect. </p>}
       </div>
     </div>
