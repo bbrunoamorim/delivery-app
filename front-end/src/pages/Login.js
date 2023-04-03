@@ -58,6 +58,8 @@ function LoginPage() {
       console.log(data);
       if (data.message.role !== 'customer') {
         history.push('/admin/manage');
+        setEmail('');
+        setPassword('');
       } else if (data.message !== 'Not found' && data.message.token) {
         await setLocalStorageData();
         history.push('/customer/products');
