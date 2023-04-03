@@ -4,6 +4,7 @@ const RegisterRouter = require('./Routes/RegisterRoutes');
 const LoginRouter = require('./Routes/loginRoutes');
 const ProductRouter = require('./Routes/ProductRoutes');
 const CheckoutRouter = require('./Routes/checkoutRoutes');
+const SaleRoutes = require('./Routes/SaleRoutes');
 
 const app = express();
 
@@ -15,6 +16,6 @@ app.use('/register', RegisterRouter);
 app.use('/login', LoginRouter);
 app.use('/products', ProductRouter);
 app.use('/checkout', CheckoutRouter);
-app.get('/coffee', (_req, res) => res.status(418).end());
+app.use('/sales', SaleRoutes);
 
 module.exports = app;
