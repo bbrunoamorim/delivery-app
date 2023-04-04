@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
-
 const TOKEN_SECRET = require('fs')
-  .readFileSync('jwt.evaluation.key', { encoding: 'utf-8' });
+.readFileSync('jwt.evaluation.key', { encoding: 'utf-8' });
 
 const jwtConfig = {
   expiresIn: '30d',
