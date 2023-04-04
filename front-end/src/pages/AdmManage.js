@@ -75,7 +75,6 @@ function AdmManage() {
       setBtnRegister(true);
     }
   }, [email, password, setBtnRegister, name]);
-  console.log(role);
   return (
     <div>
       <h1>Cadastrando um novo usuário</h1>
