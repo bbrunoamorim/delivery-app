@@ -52,19 +52,13 @@ function AdmManage() {
 
   const handleClickRegister = async (event) => {
     event.preventDefault();
-    const tokenn = JSON.parse(localStorage.getItem('user')).token;
-    console.log(tokenn);
-    // const status = 409;
-    const create = await requestCreateAdm({ name, email, password, role }, tokenn);
+    const { token } = JSON.parse(localStorage.getItem('user'));
+    const create = await requestCreateAdm({ name, email, password, role }, token);
     console.log(create);
     setName('');
     setEmail('');
     setPassword('');
     setRole('');
-    // if (create.type !== status) {
-    //   history.push('/customer/products');
-    // }
-    // setError(true);
   };
 
   useEffect(() => {
