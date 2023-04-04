@@ -1,5 +1,6 @@
 // const { UserModel } = require('../../database/models');
 const RegisterService = require('../Services/RegisterService');
+// const Token = require('../utils/JWT');
 
 const createUser = async (req, res) => {
   const { name, email, password } = req.body;

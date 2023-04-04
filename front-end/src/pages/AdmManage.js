@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import AppContext from '../context/Context';
-import { requestCreateUsers } from '../services/api';
+import { requestCreateAdm } from '../services/api';
 
 function AdmManage() {
   const {
@@ -12,21 +12,23 @@ function AdmManage() {
     password,
     setPassword,
     error,
-    setError,
+    // setError,
     name,
     setName,
     btnRegister,
     setBtnRegister,
+    role,
+    setRole,
   } = useContext(AppContext);
 
-  const history = useHistory();
+  // const history = useHistory();
 
   const ADMIN = 'admin_manage';
   const idName = 'input-name';
   const idEmail = 'input-email';
   const idPassword = 'input-password';
   const idBtnRegister = 'button-register';
-  // const idElementInvalid = 'element-invalid_register';
+  const idElementInvalid = 'element-invalid_register';
   // const idRole = 'select-role';
   const idCustomerProducts = 'customer_products';
   const idElementNavBarLinkOrders = 'element-navbar-link-orders';
@@ -44,14 +46,19 @@ function AdmManage() {
     setName(target.value);
   };
 
-  const handleClickRegister = async () => {
-    const status = 409;
-    const create = await requestCreateUsers({ name, email, password });
+  const handleChangeRole = ({ target }) => {
+    setRole(target.value);
+  };
+
+  const handleClickRegister = async (event) => {
+    event.preventDefault();
+    const { token } = JSON.parse(localStorage.getItem('user'));
+    const create = await requestCreateAdm({ name, email, password, role }, token);
     console.log(create);
-    if (create.type !== status) {
-      history.push('/customer/products');
-    }
-    setError(true);
+    setName('');
+    setEmail('');
+    setPassword('');
+    setRole('');
   };
 
   useEffect(() => {
@@ -68,7 +75,6 @@ function AdmManage() {
       setBtnRegister(true);
     }
   }, [email, password, setBtnRegister, name]);
-
   return (
     <div>
       <h1>Cadastrando um novo usuário</h1>
@@ -88,11 +94,14 @@ function AdmManage() {
           nameBtn="Sair"
         />
       </nav>
-      <form>
+      <form
+        onSubmit={ handleClickRegister }
+      >
         Nome:
         <Input
           type="nome"
           value={ name }
+          name="nome"
           onChange={ handleChangeName }
           testId={ `${ADMIN}__${idName}` }
         />
@@ -100,6 +109,7 @@ function AdmManage() {
         <Input
           type="email"
           value={ email }
+          name="email"
           onChange={ handleChangeEmail }
           testId={ `${ADMIN}__${idEmail}` }
         />
@@ -107,29 +117,45 @@ function AdmManage() {
         <Input
           testId={ `${ADMIN}__${idPassword}` }
           type="password"
+          name="password"
           value={ password }
           onChange={ handleChangePassword }
         />
         Role:
         <select
+          onChange={ handleChangeRole }
           data-testid="admin_manage__select-role"
           type="select"
-          defaultValue="administrator"
+          value={ role }
         >
-          <option value="administrator">administrator</option>
           <option value="seller">seller</option>
+          <option value="customer">customer</option>
+
         </select>
 
-        <Button
+        <button
+          type="submit"
+          data-testid={ `${ADMIN}__${idBtnRegister}` }
+          disabled={ btnRegister }
+          name="Register"
+          onSubmit={ (e) => handleClickRegister(e) }
+
+        >
+          Register
+
+        </button>
+        {/* <Button
           type="submit"
           testId={ `${ADMIN}__${idBtnRegister}` }
           disabled={ btnRegister }
           nameBtn="Register"
-          onClick={ handleClickRegister }
+          onSubmit={ handleClickRegister }
 
-        />
+        /> */}
       </form>
-      <div>
+      <div
+        data-testid={ `${ADMIN}__${idElementInvalid}` }
+      >
         {error && <p> Usuário já existe. </p>}
       </div>
     </div>
