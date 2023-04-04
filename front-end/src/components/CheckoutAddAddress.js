@@ -1,13 +1,27 @@
-function AddAddress() {
-  const users = localStorage.getItem('user');
-  const usersArr = [...users];
-  const sellers = usersArr.filter((user) => user.role === 'seller');
+import PropTypes from 'prop-types';
+import api from '../services/api';
+
+function AddAddress({ selectedSeller, setSelectedSeller }) {
+  const [sellers, setSellers] = useState();
   const testidName = 'customer_checkout__';
+
+  useEffect(() => {
+    const getSellers = async () => {
+      const { data } = await api.get('/checkout/sellers');
+      setSellers(data.sellers);
+    };
+    getSellers();
+  }, []);
+
   return (
     <div>
       <div>
         <p>P. Vendedora Responsável</p>
-        <select data-testid={ `${testidName}select-seller` }>
+        <select
+          data-testid={ `${testidName}select-seller` }
+          value={ selectedSeller }
+          onChange={ setSelectedSeller }
+        >
           {sellers.map(({ name, id }) => (
             <option key={ id } value={ id }>
               {name}
@@ -26,5 +40,10 @@ function AddAddress() {
     </div>
   );
 }
+
+AddAddress.propTypes = {
+  selectedSeller: PropTypes.number.isRequired,
+  setSelectedSeller: PropTypes.func.isRequired,
+};
 
 export default AddAddress;
