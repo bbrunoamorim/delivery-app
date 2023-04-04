@@ -36,33 +36,21 @@ export const requestLogin = async (dataset) => {
 
 export const requestCheckout = async (dataset) => {
   const { data } = await api.post('/checkout', dataset);
+  console.log(data);
   return data.id;
 };
 
-// export const requestAllSales = async (email) => {
-//   const config = {
-//     method: 'GET',
-//     mode: 'cors',
-//     headers: {
-//       'Content-Type': applicationJson,
-//     },
-//   };
-//   const dataset = { email };
-//   console.log(dataset);
-//   const { data } = await api.get('/orders', dataset, config);
-//   return data;
-// };
-
 export const requestAllSales = async (email) => {
   const config = {
-    method: 'GET',
+    method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': applicationJson,
     },
   };
   const dataset = { email };
-  const { data } = await api.get('orders', dataset, config);
+  const { data } = await api.post('/orders', dataset, config);
+
   return data;
 };
 
@@ -86,5 +74,10 @@ export const updateSaleStatus = async (id, status) => {
   };
   const dataset = { id, status };
   const { data } = await api.patch('orders/update', dataset, config);
+  return data;
+};
+
+export const requestSellers = async () => {
+  const { data } = await api.get('/users/sellers');
   return data;
 };

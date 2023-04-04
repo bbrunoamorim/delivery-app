@@ -23,6 +23,7 @@ export default function CustomerProductsNavbar({ name }) {
       <Button
         type="button"
         data-testid={ `${ROUTE}__${ORDERS}` }
+        onClick={ () => { history.push('/seller/orders'); } }
         nameBtn="PEDIDOS"
       />
       <text
