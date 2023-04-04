@@ -21,12 +21,24 @@ export const requestCreateUsers = async (createUser) => {
   return data;
 };
 
+export const requestCreateAdm = async (createAdm, token) => {
+  const config = {
+
+    headers: {
+      authorization: token,
+    },
+  };
+  const { data } = await api.post('/admin/manage', createAdm, config);
+  return data;
+};
+
 export const requestLogin = async (dataset) => {
   const config = {
     method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
+      // authorization: token,
     },
   };
   const response = await api.post('/login', dataset, config);
