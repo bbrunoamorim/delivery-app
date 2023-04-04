@@ -12,35 +12,6 @@ export default function SellerOrders() {
     userLogged,
   } = useContext(AppContext);
 
-  // const dataset = [
-  //   {
-  //     id: 1,
-  //     userId: 3,
-  //     sellerId: 2,
-  //     totalPrice: '50.00',
-  //     deliveryAddress: 'Rua teste',
-  //     deliveryNumber: 10,
-  //     saleDate: '2023-04-04T03:24:12.000Z',
-  //     status: 'Pendente',
-  //     seller: {
-  //       name: 'Fulana Pereira',
-  //     },
-  //   },
-  //   {
-  //     id: 2,
-  //     userId: 3,
-  //     sellerId: 2,
-  //     totalPrice: '50.00',
-  //     deliveryAddress: 'Rua teste',
-  //     deliveryNumber: 10,
-  //     saleDate: '2023-04-04T03:25:08.000Z',
-  //     status: 'Pendente',
-  //     seller: {
-  //       name: 'Fulana Pereira',
-  //     },
-  //   },
-  // ];
-
   useEffect(() => {
     const getAllSalesBySeller = async () => {
       try {

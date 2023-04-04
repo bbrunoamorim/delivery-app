@@ -45,7 +45,6 @@ function LoginPage() {
       } = await requestLogin({ email, password });
 
       const user = { name, email, role, token };
-
       localStorage.setItem('user', JSON.stringify(user));
 
       setName(name);
@@ -55,6 +54,7 @@ function LoginPage() {
   };
 
   const handleClickLogin = async () => {
+    // const token = JSON.parse(localStorage.getItem('user').token);
     try {
       const { data } = await requestLogin({ email, password });
       await setLocalStorageData();

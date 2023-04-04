@@ -11,6 +11,7 @@ function Input(props) {
     testId,
     id,
     onKeyDown,
+    name,
   } = props;
   return (
     <input
@@ -22,6 +23,7 @@ function Input(props) {
       data-testid={ testId }
       id={ id }
       onKeyDown={ onKeyDown }
+      name={ name }
     />
   );
 }
@@ -29,6 +31,7 @@ function Input(props) {
 Input.propTypes = {
   id: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
