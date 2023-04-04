@@ -33,8 +33,15 @@ export const requestLogin = async (dataset) => {
   return response;
 };
 
-export const requestCheckout = async (dataset) => {
-  const { data } = await api.post('/checkout', dataset);
+export const requestCheckout = async (dataset, token) => {
+  const config = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+    },
+  };
+  const { data } = await api.post('/checkout', dataset, config);
   return data.id;
 };
 

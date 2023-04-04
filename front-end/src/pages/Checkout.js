@@ -7,17 +7,16 @@ import AppContext from '../context/Context';
 
 function Checkout() {
   const [addressState, setAddressState] = useState({
-    sellers,
-    address,
-    number,
+    address: '',
+    number: 0,
+    sellers: 0,
   });
   const history = useHistory();
   const { valorTotal } = useContext(AppContext);
 
   const handleClickCheckout = async () => {
-    const user = localStorage.getItem('user');
-    const cart = localStorage.getItem('cart');
-
+    const user = JSON.parse(localStorage.getItem('user'));
+    const cart = JSON.parse(localStorage.getItem('cart'));
     const data = {
       data: {
         products: cart,
@@ -28,7 +27,7 @@ function Checkout() {
         totalPrice: valorTotal,
       },
     };
-    const id = await requestCheckout(data);
+    const id = await requestCheckout(data, user.token);
     history.push(`/customer/orders/${id}`);
   };
 

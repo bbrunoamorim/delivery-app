@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import api from '../services/api';
+import { useState, useEffect } from 'react';
+import { api } from '../services/api';
 
 function AddAddress({ addressState, setAddressState }) {
   const [sellers, setSellers] = useState();
@@ -9,6 +10,10 @@ function AddAddress({ addressState, setAddressState }) {
     const getSellers = async () => {
       const { data } = await api.get('/checkout/sellers');
       setSellers(data.sellers);
+      setAddressState({
+        ...addressState,
+        sellers: data.sellers[0].id,
+      });
     };
     getSellers();
   }, []);
@@ -22,10 +27,10 @@ function AddAddress({ addressState, setAddressState }) {
           value={ addressState.sellers }
           onChange={ ({ target }) => setAddressState({
             ...addressState,
-            sellers: target.value,
+            sellers: Number(target.value),
           }) }
         >
-          {sellers.map(({ name, id }) => (
+          {sellers && sellers.map(({ name, id }) => (
             <option key={ id } value={ id }>
               {name}
             </option>
@@ -38,15 +43,10 @@ function AddAddress({ addressState, setAddressState }) {
           type="text"
           data-testid={ `${testidName}input-address` }
           value={ addressState.address }
-          onChange={ ({ target }) => {
-            setAddressState({
-              ...addressState,
-              address: setAddressState({
-                ...addressState,
-                address: target.value,
-              }),
-            });
-          } }
+          onChange={ ({ target }) => setAddressState({
+            ...addressState,
+            address: target.value,
+          }) }
         />
       </div>
       <div>
@@ -58,7 +58,7 @@ function AddAddress({ addressState, setAddressState }) {
           onChange={ ({ target }) => {
             setAddressState({
               ...addressState,
-              number: target.value,
+              number: Number(target.value),
             });
           } }
         />

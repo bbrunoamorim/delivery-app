@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import { useContext } from 'react';
-import Button from '../components/Button';
+import Button from './Button';
 import AppContext from '../context/Context';
 
 export default function Navbar() {
