@@ -11,7 +11,6 @@ const createOrder = async (data) => {
     totalPrice,
     deliveryAddress,
     deliveryNumber,
-    saleDate: new Date().toISOString(),
     status: 'Pendente',
   });
   await Promise.all(products
