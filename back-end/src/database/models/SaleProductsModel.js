@@ -26,14 +26,14 @@ const SaleProduct = (sequelize, DataTypes) => {
     {
       tableName: 'sales_products',
       underscored: true,
-      timestamps: false
+      timestamps: false,
     });
 
-  SaleProductTable.associate = ({SaleModel, ProductModel}) => {
+  SaleProductTable.associate = ({ SaleProductModel, SaleModel, ProductModel }) => {
     // console.log(models)
     SaleModel.belongsToMany(ProductModel, {
       as: 'sales',
-      foreignKey: 'salesId',
+      foreignKey: 'saleId',
       otherKey: 'productId',
       through: SaleProductTable,
     });
@@ -41,9 +41,10 @@ const SaleProduct = (sequelize, DataTypes) => {
     ProductModel.belongsToMany(SaleModel, {
       as: 'products',
       foreignKey: 'productId',
-      otherKey: 'salesId',
+      otherKey: 'saleId',
       through: SaleProductTable,
     });
+    SaleProductModel.belongsTo(ProductModel, { foreignKey: 'productId', as: 'product' });
   };
 
   return SaleProductTable;

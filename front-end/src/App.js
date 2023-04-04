@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Products from './pages/Products';
 import Checkout from './pages/Checkout';
 import Register from './pages/Register';
+import SellerOrdersDetails from './pages/SellerOrdersDetails';
 import AdmManage from './pages/AdmManage';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Route exact path="/customer/products" component={ Products } />
       <Route exact path="/customer/checkout" component={ Checkout } />
       <Route exact path="/register" component={ Register } />
+      <Route exact path="/seller/orders/:id" component={ SellerOrdersDetails } />
       <Route exact path="/admin/manage" component={ AdmManage } />
     </Switch>
   );
