@@ -45,7 +45,7 @@ function AddAddress({ addressState, setAddressState }) {
           value={ addressState.address }
           onChange={ ({ target }) => setAddressState({
             ...addressState,
-            address: target.value,
+            address: `${target.value}`,
           }) }
         />
       </div>
