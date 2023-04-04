@@ -6,16 +6,21 @@ import { requestCheckout } from '../services/api';
 import AppContext from '../context/Context';
 
 function Checkout() {
-  const [selectedSeller, setSelectedSeller] = useState();
+  const [addressState, setAddressState] = useState({
+    sellers,
+    adresss,
+    number,
+  });
   const history = useHistory();
-  const { products } = useContext(AppContext);
   const { valorTotal } = useContext(AppContext);
 
   const handleClickCheckout = async () => {
     const user = localStorage.getItem('user');
+    const cart = localStorage.getItem('cart');
+
     const data = {
       data: {
-        products,
+        products: cart,
         sellerId: selectedSeller,
         token: user.token,
         totalPrice: valorTotal,
@@ -37,8 +42,8 @@ function Checkout() {
       <div>
         <h1>Detalhes e Endereço para Entrega</h1>
         <AddAddress
-          selectedSeller={ selectedSeller }
-          setSelectedSeller={ setSelectedSeller }
+          addressState={ addressState }
+          setAddressState={ setAddressState }
         />
       </div>
       <button

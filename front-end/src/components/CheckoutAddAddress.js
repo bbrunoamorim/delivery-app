@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import api from '../services/api';
 
-function AddAddress({ selectedSeller, setSelectedSeller }) {
+function AddAddress({ addressState, setAddressState }) {
   const [sellers, setSellers] = useState();
   const testidName = 'customer_checkout__';
 
@@ -19,8 +19,11 @@ function AddAddress({ selectedSeller, setSelectedSeller }) {
         <p>P. Vendedora Responsável</p>
         <select
           data-testid={ `${testidName}select-seller` }
-          value={ selectedSeller }
-          onChange={ setSelectedSeller }
+          value={ addressState.sellers }
+          onChange={ ({ target }) => setAddressState({
+            ...addressState,
+            sellers: target.value,
+          }) }
         >
           {sellers.map(({ name, id }) => (
             <option key={ id } value={ id }>
@@ -31,19 +34,46 @@ function AddAddress({ selectedSeller, setSelectedSeller }) {
       </div>
       <div>
         <p>Endereço</p>
-        <input type="text" data-testid={ `${testidName}input-address` } />
+        <input
+          type="text"
+          data-testid={ `${testidName}input-address` }
+          value={ addressState.address }
+          onChange={ ({ target }) => {
+            setAddressState({
+              ...addressState,
+              address: setAddressState({
+                ...addressState,
+                address: target.value,
+              }),
+            });
+          } }
+        />
       </div>
       <div>
         <p>Número</p>
-        <input type="text" data-testid={ `${testidName}input-address-number` } />
+        <input
+          type="text"
+          data-testid={ `${testidName}input-address-number` }
+          value={ addressState.number }
+          onChange={ ({ target }) => {
+            setAddressState({
+              ...addressState,
+              number: target.value,
+            });
+          } }
+        />
       </div>
     </div>
   );
 }
 
 AddAddress.propTypes = {
-  selectedSeller: PropTypes.number.isRequired,
-  setSelectedSeller: PropTypes.func.isRequired,
+  addressState: PropTypes.shape({
+    sellers: PropTypes.number.isRequired,
+    address: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+  }).isRequired,
+  setAddressState: PropTypes.func.isRequired,
 };
 
 export default AddAddress;
