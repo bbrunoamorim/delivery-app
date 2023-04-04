@@ -50,8 +50,6 @@ export default function Provider({ children }) {
       setName,
       btnRegister,
       setBtnRegister,
-      isLoading,
-      setIsLoading,
       emailLoggedIn,
       setEmailLoggedIn,
       userLogged,
