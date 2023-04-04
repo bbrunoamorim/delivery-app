@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import propTypes from 'prop-types';
 import AppContext from './Context';
 
@@ -17,12 +17,12 @@ export default function Provider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState({});
 
-  const handleInputValue = useCallback((id, value) => {
+  const handleInputValue = (id, value) => {
     setInputValue((prevstate) => ({
       ...prevstate,
       [id]: value,
     }));
-  }, [setInputValue]);
+  };
 
   const context = useMemo(
     () => ({
@@ -56,7 +56,7 @@ export default function Provider({ children }) {
     }),
     [email, password, btnLogin, error, products, sales,
       quantityProducts, disableQuantity, valorTotal, name, btnRegister, isLoading,
-      inputValue, setInputValue, handleInputValue],
+      inputValue],
   );
   return <AppContext.Provider value={ context }>{children}</AppContext.Provider>;
 }
