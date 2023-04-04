@@ -58,6 +58,7 @@ function LoginPage() {
       await setLocalStorageData();
       if (data.message.role === 'administrator') {
         history.push('/admin/manage');
+        setName('');
         setEmail('');
         setPassword('');
       } else if (data.message !== 'Not found' && data.message.token) {
