@@ -42,7 +42,7 @@ export default function SellerOrdersDetails() {
   useEffect(() => {
     getSalesAndProducts();
   }, [getSalesAndProducts]);
-
+  console.log(sales);
   return (
     <div>
       {isLoading ? (<p>Carregando...</p>) : (

@@ -55,13 +55,12 @@ function LoginPage() {
   const handleClickLogin = async () => {
     try {
       const { data } = await requestLogin({ email, password });
-      console.log(data);
+      await setLocalStorageData();
       if (data.message.role !== 'customer') {
         history.push('/admin/manage');
         setEmail('');
         setPassword('');
       } else if (data.message !== 'Not found' && data.message.token) {
-        await setLocalStorageData();
         history.push('/customer/products');
       } else {
         console.error('A resposta do servidor está vazia.');
