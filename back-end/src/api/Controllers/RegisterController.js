@@ -1,4 +1,3 @@
-// const { UserModel } = require('../../database/models');
 const RegisterService = require('../Services/RegisterService');
 
 const createUser = async (req, res) => {

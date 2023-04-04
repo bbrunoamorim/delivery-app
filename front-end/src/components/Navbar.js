@@ -26,20 +26,19 @@ export default function Navbar() {
         type="button"
         testId="customer_products__element-navbar-link-orders"
         nameBtn="MEUS PEDIDOS"
+        onClick={ () => history.push('/customer/orders') }
       />
       <Button
         type="button"
         testId="customer_products__element-navbar-user-full-name"
         nameBtn={ name }
       />
-      <a href="/login">
-        <Button
-          type="button"
-          testId="customer_products__element-navbar-link-logout"
-          nameBtn="Sair"
-          onClick={ () => logout() }
-        />
-      </a>
+      <Button
+        type="button"
+        testId="customer_products__element-navbar-link-logout"
+        nameBtn="Sair"
+        onClick={ () => logout() }
+      />
     </nav>
   );
 }

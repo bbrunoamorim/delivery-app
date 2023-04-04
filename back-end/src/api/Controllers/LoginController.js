@@ -13,6 +13,7 @@ const login = async (req, res) => {
   if (type) return res.status(errorMap.mapError(type)).json({ message: 'Not found' });
 
   const loginValid = {
+    id: message.id,
     name: message.name,
     email: message.email,
     role: message.role,

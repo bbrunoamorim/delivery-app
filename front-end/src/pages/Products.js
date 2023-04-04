@@ -5,7 +5,6 @@ import { requestProducts } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import AppContext from '../context/Context';
 import Button from '../components/Button';
-// import Button from '../components/Button';
 
 export default function Products() {
   const { products, setProducts, valorTotal } = useContext(AppContext);
@@ -18,6 +17,7 @@ export default function Products() {
       data.map((product) => ({ ...product, quantity: 0, totalValue: 0 })),
     );
   }, [setProducts]);
+
   useEffect(() => {
     getProducts();
   }, [getProducts]);
@@ -29,15 +29,17 @@ export default function Products() {
   return (
     <div>
       <Navbar />
-      {products.map(({ id, name, price, urlImage }) => (
-        <ProductCard
-          key={ id }
-          index={ id }
-          price={ price }
-          urlImage={ urlImage }
-          title={ name }
-        />
-      ))}
+      {
+        products.map(({ id, name, price, urlImage }) => (
+          <ProductCard
+            key={ id }
+            index={ id }
+            price={ price }
+            urlImage={ urlImage }
+            title={ name }
+          />
+        ))
+      }
       <Button
         testId={ `${idCustomerProd}button-cart` }
         disabled={ valorTotal === 0 }
@@ -46,8 +48,8 @@ export default function Products() {
           <p
             data-testid={ `${idCustomerProd}checkout-bottom-value` }
           >
-            {`${(Math.round(valorTotal * 100) / 100)
-              .toFixed(2).replace('.', ',')}`}
+            { `${(Math.round(valorTotal * 100) / 100)
+              .toFixed(2).replace('.', ',')}` }
 
           </p>
         }
