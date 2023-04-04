@@ -58,7 +58,7 @@ function AddAddress({ addressState, setAddressState }) {
           onChange={ ({ target }) => {
             setAddressState({
               ...addressState,
-              number: Number(target.value),
+              number: target.value,
             });
           } }
         />
