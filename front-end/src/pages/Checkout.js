@@ -8,7 +8,7 @@ import AppContext from '../context/Context';
 function Checkout() {
   const [addressState, setAddressState] = useState({
     address: '',
-    number: '',
+    number: 0,
     sellers: 0,
   });
   const history = useHistory();

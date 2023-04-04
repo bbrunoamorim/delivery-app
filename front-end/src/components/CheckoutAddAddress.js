@@ -58,7 +58,7 @@ function AddAddress({ addressState, setAddressState }) {
           onChange={ ({ target }) => {
             setAddressState({
               ...addressState,
-              number: target.value,
+              number: Number(target.value),
             });
           } }
         />
@@ -71,7 +71,7 @@ AddAddress.propTypes = {
   addressState: PropTypes.shape({
     sellers: PropTypes.number.isRequired,
     address: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
   }).isRequired,
   setAddressState: PropTypes.func.isRequired,
 };
