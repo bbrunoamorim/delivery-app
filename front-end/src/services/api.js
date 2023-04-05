@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: 'http://localhost:3001',
 });
 
@@ -45,8 +45,15 @@ export const requestLogin = async (dataset) => {
   return response;
 };
 
-export const requestCheckout = async (dataset) => {
-  const { data } = await api.post('/checkout', dataset);
+export const requestCheckout = async (dataset, token) => {
+  const config = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+    },
+  };
+  const { data } = await api.post('/checkout', dataset, config);
   return data.id;
 };
 

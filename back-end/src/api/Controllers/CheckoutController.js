@@ -8,6 +8,12 @@ const createOrder = async (req, res) => {
   return res.status(201).json({ id });
 };
 
+const getSellers = async (_req, res) => {
+  const sellers = await CheckoutService.getSellers();
+  return res.status(200).json({ sellers });
+};
+
 module.exports = {
   createOrder,
+  getSellers,
 };
