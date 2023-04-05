@@ -21,6 +21,7 @@ export default function Navbar() {
         type="button"
         testId="customer_products__element-navbar-link-products"
         nameBtn="PRODUTOS"
+        onClick={ () => history.push('/customer/products') }
       />
       <Button
         type="button"

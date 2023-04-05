@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import Products from './pages/Products';
 import Checkout from './pages/Checkout';
 import Register from './pages/Register';
+import SellerOrdersDetails from './pages/SellerOrdersDetails';
+import AdmManage from './pages/AdmManage';
 import OrderDetails from './pages/OrderDetails';
 
 function App() {
@@ -12,10 +14,12 @@ function App() {
     <Switch>
       <Route exact path="/" render={ () => <Redirect to="/login" /> } />
       <Route exact path="/login" component={ Login } />
+      <Route exact path="/register" component={ Register } />
+      <Route exact path="/admin/manage" component={ AdmManage } />
       <Route exact path="/customer/products" component={ Products } />
       <Route exact path="/customer/checkout" component={ Checkout } />
-      <Route exact path="/register" component={ Register } />
       <Route exact path="/customer/orders" component={ OrderDetails } />
+      <Route exact path="/seller/orders/:id" component={ SellerOrdersDetails } />
     </Switch>
   );
 }

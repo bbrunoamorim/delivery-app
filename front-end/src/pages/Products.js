@@ -26,6 +26,7 @@ export default function Products() {
     history.push('/customer/checkout');
   };
 
+  products.map(({ urlImage }) => console.log(urlImage));
   return (
     <div>
       <Navbar />

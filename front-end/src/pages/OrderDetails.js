@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import AppContext from '../context/Context';
-import { requestLogin, requestSales } from '../services/api';
+import { requestLogin, requestAllSales } from '../services/api';
 import DetailedOrder from '../components/DetailedOrder';
 
 export default function OrderDetails() {
@@ -14,7 +14,7 @@ export default function OrderDetails() {
   }, [email, password]);
 
   const getSales = useCallback(async () => {
-    const data = await requestSales();
+    const data = await requestAllSales();
     const id = await findUser();
 
     const userSales = data.filter(({ userId }) => userId === id);

@@ -4,7 +4,8 @@ const RegisterRouter = require('./Routes/RegisterRoutes');
 const LoginRouter = require('./Routes/loginRoutes');
 const ProductRouter = require('./Routes/ProductRoutes');
 const CheckoutRouter = require('./Routes/checkoutRoutes');
-const SaleRoutes = require('./Routes/SaleRoutes');
+const SalesRouter = require('./Routes/SalesRoutes');
+const RegisterAdmRouter = require('./Routes/RegisterAdmRouter');
 
 const app = express();
 
@@ -13,9 +14,10 @@ app.use(cors());
 app.use(express.static('public'));
 
 app.use('/register', RegisterRouter);
+app.use('/admin/manage', RegisterAdmRouter);
 app.use('/login', LoginRouter);
 app.use('/products', ProductRouter);
 app.use('/checkout', CheckoutRouter);
-app.use('/sales', SaleRoutes);
+app.use('/orders', SalesRouter);
 
 module.exports = app;

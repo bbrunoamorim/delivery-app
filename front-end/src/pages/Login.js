@@ -43,7 +43,6 @@ function LoginPage() {
       } = await requestLogin({ email, password });
 
       const user = { name, email, role, token };
-
       localStorage.setItem('user', JSON.stringify(user));
 
       setName(name);
@@ -53,10 +52,15 @@ function LoginPage() {
   };
 
   const handleClickLogin = async () => {
+    // const token = JSON.parse(localStorage.getItem('user').token);
     try {
       const { data } = await requestLogin({ email, password });
-      if (data.message !== 'Not found' && data.message.token) {
-        await setLocalStorageData();
+      await setLocalStorageData();
+      if (data.message.role === 'administrator') {
+        history.push('/admin/manage');
+        setEmail('');
+        setPassword('');
+      } else if (data.message !== 'Not found' && data.message.token) {
         history.push('/customer/products');
       } else {
         console.error('A resposta do servidor está vazia.');

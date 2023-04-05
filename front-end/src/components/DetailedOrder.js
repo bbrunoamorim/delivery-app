@@ -7,11 +7,13 @@ export default function DetailedOrder({ id, orderStatus, orderDate, price }) {
 
   const getStatus = (status) => {
     switch (status) {
-    case '0':
-      return 'Pendente';
     case '1':
-      return 'Preparando';
+      return 'Pendente';
     case '2':
+      return 'Preparando';
+    case '3':
+      return 'Em Trânsito';
+    case '4':
       return 'Entregue';
     default:
       return 'Status não encontrado';

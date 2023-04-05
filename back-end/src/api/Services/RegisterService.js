@@ -14,7 +14,9 @@ const createUser = async (name, email, password) => {
   if (alreadyUserEmail || alreadyUserName) {
     return { type: 409, message: 'Usuário já existe' };
   }
-  const createUsers = await UserModel.create({ name, email, password: passHashed });
+  const createUsers = await UserModel.create({
+    name, email, password: passHashed,
+  });
   return createUsers;
 };
 
@@ -23,7 +25,25 @@ const findAll = async () => {
   return allUsers;
 };
 
+const createAdm = async (name, email, password, role) => {
+  const passHashed = md5(password);
+  const alreadyUserEmail = await UserModel.findOne({
+    where: { email },
+  });
+
+  // const alreadyUserName = await UserModel.findOne({
+  //   where: { name },
+  // });
+
+  if (alreadyUserEmail) {
+    return { type: 409, message: 'Usuário já existe' };
+  }
+  const createUsers = await UserModel.create({ name, email, password: passHashed, role });
+  return createUsers;
+};
+
 module.exports = {
   createUser,
   findAll,
+  createAdm,
 };
