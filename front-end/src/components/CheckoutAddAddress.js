@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { api } from '../services/api';
+import { requestCheckoutSellers } from '../services/api';
 
 function AddAddress({ addressState, setAddressState }) {
   const [sellers, setSellers] = useState();
@@ -8,7 +8,7 @@ function AddAddress({ addressState, setAddressState }) {
 
   useEffect(() => {
     const getSellers = async () => {
-      const { data } = await api.get('/checkout/sellers');
+      const data = await requestCheckoutSellers();
       setSellers(data.sellers);
       setAddressState({
         ...addressState,

@@ -4,6 +4,7 @@ import Table from '../components/CheckoutTable';
 import AddAddress from '../components/CheckoutAddAddress';
 import { requestCheckout } from '../services/api';
 import AppContext from '../context/Context';
+import Navbar from '../components/Navbar';
 
 function Checkout() {
   const [addressState, setAddressState] = useState({
@@ -34,6 +35,7 @@ function Checkout() {
   return (
     <>
       <div>
+        <Navbar />
         <h1>Finalizar Pedido</h1>
         <Table />
         <div data-testid="customer_checkout__element-order-total-price">

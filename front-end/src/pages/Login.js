@@ -61,7 +61,7 @@ function LoginPage() {
       if (data.message.role === 'seller') {
         setEmailLoggedIn(data.message.email);
         setUserLogged(data.message.name);
-        return history.push('/seller/orders/');
+        return history.push('/seller/orders');
       }
       if (data.message.role === 'administrator') {
         history.push('/admin/manage');

@@ -98,3 +98,8 @@ export const requestSellers = async () => {
   const { data } = await api.get('/users/sellers');
   return data;
 };
+
+export const requestCheckoutSellers = async () => {
+  const { data } = await api.get('/checkout/sellers');
+  return data;
+};

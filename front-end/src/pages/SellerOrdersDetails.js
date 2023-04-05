@@ -26,6 +26,7 @@ export default function SellerOrdersDetails() {
       if (!dataset || !datasetProduct) history.push('/seller/orders');
 
       const newObj = { sale: dataset, saleProducts: datasetProduct };
+
       setSales(newObj);
     } catch (error) {
       console.error(error);
