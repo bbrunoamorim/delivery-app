@@ -1,9 +1,9 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import CustomerOrdersDetails from '../components/CustomerOrdersDetails';
 import CustomerOrdersTitle from '../components/CustomerOrdersTitle';
-import AppContext from '../context/Context';
+
 import { requestSales, requestSalesProducts, updateSaleStatus } from '../services/api';
 import Navbar from '../components/Navbar';
 
@@ -12,7 +12,6 @@ export default function OrdersDetailsCostumer() {
   const [informations, setInformations] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [statusSale, setStatusSale] = useState('');
-  const { valorTotal } = useContext(AppContext);
 
   const ORDER_ID = 'customer_order_details__element-order';
   const { id } = useParams();
