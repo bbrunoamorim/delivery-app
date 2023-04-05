@@ -12,7 +12,6 @@ export default function OrdersDetailsCostumer() {
   const [informations, setInformations] = useState({});
   const [disable, setDisable] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-
   const { valorTotal } = useContext(AppContext);
 
   const ORDER_ID = 'customer_order_details__element-order';
@@ -31,8 +30,14 @@ export default function OrdersDetailsCostumer() {
   }, [id, getProductsSale]);
 
   const updateStatus = () => {
-    setDisable(false);
+    const { status } = informations;
+    if (status === 'Em Trânsito') {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
   };
+  console.log(informations)
   return (
     <div>
       <Navbar />
@@ -54,12 +59,15 @@ export default function OrdersDetailsCostumer() {
             <th>Valor Unitário</th>
             <th>Sub-total</th>
             <Button
-              disabled={ !disable }
+              disabled={ disable }
               testId="customer_order_details__button-delivery-check"
               type="button"
               nameBtn="MARCAR COMO ENTREGUE"
               onClick={ updateStatus }
             />
+            <td data-testid={ `${ORDER_ID}-details-label-delivery-status${1}` }>
+              {informations.status}
+            </td>
           </tr>
         </thead>
         <tbody>
@@ -76,9 +84,10 @@ export default function OrdersDetailsCostumer() {
           )}
         </tbody>
       </table>
-      Valor Total:
-      <span data-testid={ `${ORDER_ID}-total-price` } />
-      { (Math.round(valorTotal * 100) / 100).toFixed(2).replace('.', ',')}
+      <div data-testid={ `${ORDER_ID}-total-price` }>
+        Valor Total:
+        {(Math.round(valorTotal * 100) / 100).toFixed(2).replace('.', ',')}
+      </div>
     </div>
   );
 }

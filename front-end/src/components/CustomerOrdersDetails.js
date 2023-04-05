@@ -1,6 +1,5 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-// import { useContext } from 'react';
-// import AppContext from '../context/Context';
 
 function CustomerOrdersDetails({ name, price, quantity, index }) {
   const ORDER_ID = 'customer_order_details__element-order';
@@ -28,10 +27,6 @@ CustomerOrdersDetails.propTypes = {
   quantity: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
-  product: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-  }).isRequired,
 };
 
 export default CustomerOrdersDetails;

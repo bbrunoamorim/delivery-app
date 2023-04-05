@@ -18,7 +18,6 @@ export default function Provider({ children }) {
   const [userLogged, setUserLogged] = useState('');
   const [role, setRole] = useState('seller');
 
-
   const handleInputValue = (id, value) => {
     setInputValue((prevstate) => ({
       ...prevstate,
@@ -58,9 +57,22 @@ export default function Provider({ children }) {
       role,
       setRole,
     }),
-    [email, password, btnLogin, error, products, quantityProducts,
-      disableQuantity, valorTotal, inputValue, name, btnRegister,
-      emailLoggedIn, userLogged, role],
+    [
+      email,
+      password,
+      btnLogin,
+      error,
+      products,
+      quantityProducts,
+      disableQuantity,
+      valorTotal,
+      inputValue,
+      name,
+      btnRegister,
+      emailLoggedIn,
+      userLogged,
+      role,
+    ],
   );
   return <AppContext.Provider value={ context }>{children}</AppContext.Provider>;
 }

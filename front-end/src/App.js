@@ -7,12 +7,9 @@ import Checkout from './pages/Checkout';
 import Register from './pages/Register';
 import SellerOrdersDetails from './pages/SellerOrdersDetails';
 import AdmManage from './pages/AdmManage';
-<<<<<<< HEAD
 import OrdersDetailsCostumer from './pages/OrdersDetailsCustomer';
-=======
 import SellerOrders from './pages/SellerOrders';
 import CustomerOrdersDetails from './pages/CustomerOrdersDetails';
->>>>>>> 34d7e6b1d26ac69711dc34bbabcf27322b504ff6
 
 function App() {
   return (

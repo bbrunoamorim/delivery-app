@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function CustomerOrdersTitle({ seller, date, id }) {
   const ORDER_ID = 'customer_order_details__element-order';
@@ -23,3 +24,9 @@ export default function CustomerOrdersTitle({ seller, date, id }) {
     </tr>
   );
 }
+
+CustomerOrdersTitle.propTypes = {
+  seller: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+};
