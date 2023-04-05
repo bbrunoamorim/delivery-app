@@ -2,23 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-export default function DetailedOrder({ id, orderStatus, orderDate, price }) {
+export default function DetailedOrder({ id, status, orderDate, price }) {
   const history = useHistory();
-
-  const getStatus = (status) => {
-    switch (status) {
-    case '1':
-      return 'Pendente';
-    case '2':
-      return 'Preparando';
-    case '3':
-      return 'Em Trânsito';
-    case '4':
-      return 'Entregue';
-    default:
-      return 'Status não encontrado';
-    }
-  };
 
   return (
     <button
@@ -33,7 +18,7 @@ export default function DetailedOrder({ id, orderStatus, orderDate, price }) {
         <h3
           data-testid={ `customer_orders__element-delivery-status-${id}` }
         >
-          { getStatus(orderStatus) }
+          { status }
         </h3>
         <div>
           <p
@@ -50,7 +35,7 @@ export default function DetailedOrder({ id, orderStatus, orderDate, price }) {
 
 DetailedOrder.propTypes = {
   id: PropTypes.number.isRequired,
-  orderStatus: PropTypes.number.isRequired,
+  status: PropTypes.string.isRequired,
   orderDate: PropTypes.instanceOf(Date).isRequired,
   price: PropTypes.number.isRequired,
 };

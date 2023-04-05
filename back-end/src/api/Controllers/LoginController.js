@@ -9,8 +9,7 @@ const login = async (req, res) => {
   //     .json({ message: 'Some required fields are missing' });
   // }
   const { type, message } = await loginService.login(req.body);
-  console.log(message.dataValues);
-
+ 
   if (type) return res.status(errorMap.mapError(type)).json({ message: 'Not found' });
 
   const loginValid = {
@@ -20,13 +19,7 @@ const login = async (req, res) => {
     role: message.role,
   };
   const token = jwt.generateToken(loginValid);
-  // const decode = jwt.decodeToken(authorization);
 
-  // if (decode.role !== message.dataValues.role) {
-  //   return res.status(401).json({ message: 'Erro' });
-  // }
-  // if (!authorization) return decode;
-  // console.log(decode);
   return res.status(200).json({ message: { ...loginValid, token } });
 };
 

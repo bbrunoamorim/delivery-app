@@ -16,6 +16,8 @@ function LoginPage() {
     error,
     setError,
     setName,
+    setEmailLoggedIn,
+    setUserLogged,
   } = useContext(AppContext);
   const history = useHistory();
 
@@ -56,8 +58,14 @@ function LoginPage() {
     try {
       const { data } = await requestLogin({ email, password });
       await setLocalStorageData();
+      if (data.message.role === 'seller') {
+        setEmailLoggedIn(data.message.email);
+        setUserLogged(data.message.name);
+        return history.push('/seller/orders');
+      }
       if (data.message.role === 'administrator') {
         history.push('/admin/manage');
+        setName('');
         setEmail('');
         setPassword('');
       } else if (data.message !== 'Not found' && data.message.token) {

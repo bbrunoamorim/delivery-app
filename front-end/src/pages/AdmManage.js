@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import AppContext from '../context/Context';
@@ -12,7 +12,7 @@ function AdmManage() {
     password,
     setPassword,
     error,
-    // setError,
+    setError,
     name,
     setName,
     btnRegister,
@@ -21,14 +21,14 @@ function AdmManage() {
     setRole,
   } = useContext(AppContext);
 
-  // const history = useHistory();
+  const history = useHistory();
 
   const ADMIN = 'admin_manage';
   const idName = 'input-name';
   const idEmail = 'input-email';
   const idPassword = 'input-password';
   const idBtnRegister = 'button-register';
-  const idElementInvalid = 'element-invalid_register';
+  const idElementInvalid = 'element-invalid-register';
   // const idRole = 'select-role';
   const idCustomerProducts = 'customer_products';
   const idElementNavBarLinkOrders = 'element-navbar-link-orders';
@@ -51,14 +51,17 @@ function AdmManage() {
   };
 
   const handleClickRegister = async (event) => {
-    event.preventDefault();
-    const { token } = JSON.parse(localStorage.getItem('user'));
-    const create = await requestCreateAdm({ name, email, password, role }, token);
-    console.log(create);
-    setName('');
-    setEmail('');
-    setPassword('');
-    setRole('');
+    try {
+      event.preventDefault();
+      const { token } = JSON.parse(localStorage.getItem('user'));
+      await requestCreateAdm({ name, email, password, role }, token);
+      setName('');
+      setEmail('');
+      setPassword('');
+      setRole('');
+    } catch (err) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -91,6 +94,9 @@ function AdmManage() {
           type="nav"
           value="nav"
           testId={ `${idCustomerProducts}__${idElementNavBarUserFullName}` }
+          onClick={ () => {
+            history.push('/login');
+          } }
           nameBtn="Sair"
         />
       </nav>
@@ -116,7 +122,7 @@ function AdmManage() {
         Password:
         <Input
           testId={ `${ADMIN}__${idPassword}` }
-          type="password"
+          type="text"
           name="password"
           value={ password }
           onChange={ handleChangePassword }

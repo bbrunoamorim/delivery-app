@@ -5,6 +5,7 @@ const SalesProductsController = require('../Controllers/SalesProductsController'
 const router = express.Router();
 
 router.get('/', SalesController.findAll);
+router.post('/', SalesController.getAllSales);
 router.get('/:id', SalesController.getSaleById);
 router.get('/products/:id', SalesProductsController.getSalesProductsById);
 router.patch('/update', SalesController.updateStatus); 
