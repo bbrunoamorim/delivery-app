@@ -16,6 +16,7 @@ export default function Provider({ children }) {
   const [inputValue, setInputValue] = useState({});
   const [role, setRole] = useState('seller');
 
+
   const handleInputValue = (id, value) => {
     setInputValue((prevstate) => ({
       ...prevstate,
@@ -52,8 +53,7 @@ export default function Provider({ children }) {
       setRole,
     }),
     [email, password, btnLogin, error, products, quantityProducts,
-      role,
-      disableQuantity, valorTotal, inputValue, name, btnRegister],
+      disableQuantity, valorTotal, inputValue, name, btnRegister, role],
     [
       email,
       password,
