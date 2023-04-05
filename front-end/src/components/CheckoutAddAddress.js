@@ -16,7 +16,7 @@ function AddAddress({ addressState, setAddressState }) {
       });
     };
     getSellers();
-  }, [addressState, setAddressState]);
+  }, []);
 
   return (
     <div>

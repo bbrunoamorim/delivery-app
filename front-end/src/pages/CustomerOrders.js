@@ -2,9 +2,9 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import AppContext from '../context/Context';
 import { requestLogin, requestUserOrders } from '../services/api';
-import DetailedOrder from '../components/DetailedOrder';
+import Order from '../components/Order';
 
-export default function OrderDetails() {
+export default function CustomerOrders() {
   const { sales, setSales, email, password } = useContext(AppContext);
 
   const findUser = useCallback(async () => {
@@ -31,7 +31,7 @@ export default function OrderDetails() {
       <Navbar />
       {
         sales.map(({ id, status, saleDate, totalPrice }) => (
-          <DetailedOrder
+          <Order
             key={ id }
             id={ id }
             status={ status }

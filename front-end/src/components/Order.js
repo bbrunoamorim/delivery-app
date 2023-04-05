@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-export default function DetailedOrder({ id, status, orderDate, price }) {
+export default function Order({ id, status, orderDate, price }) {
   const history = useHistory();
 
   return (
@@ -33,7 +33,7 @@ export default function DetailedOrder({ id, status, orderDate, price }) {
   );
 }
 
-DetailedOrder.propTypes = {
+Order.propTypes = {
   id: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   orderDate: PropTypes.instanceOf(Date).isRequired,
