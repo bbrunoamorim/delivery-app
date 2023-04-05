@@ -53,7 +53,7 @@ export default function OrdersDetailsCostumer() {
             <th>Descrição</th>
             <th>Quantidade</th>
             <th>Valor Unitário</th>
-            <th>Sub-total</th>
+            <th>Sub total</th>
             <Button
               disabled={ informations.status !== 'Em Trânsito' }
               testId="customer_order_details__button-delivery-check"
