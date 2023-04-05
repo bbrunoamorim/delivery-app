@@ -1,22 +1,33 @@
 import { useHistory } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Table from '../components/CheckoutTable';
 import AddAddress from '../components/CheckoutAddAddress';
 import { requestCheckout } from '../services/api';
 import AppContext from '../context/Context';
 
 function Checkout() {
+  const [addressState, setAddressState] = useState({
+    address: '',
+    number: 0,
+    sellers: 0,
+  });
   const history = useHistory();
-  const { products } = useContext(AppContext);
   const { valorTotal } = useContext(AppContext);
 
   const handleClickCheckout = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const cart = JSON.parse(localStorage.getItem('cart'));
     const data = {
       data: {
-        products,
+        products: cart,
+        sellerId: addressState.sellers,
+        deliveryAddress: addressState.address,
+        deliveryNumber: addressState.number,
+        token: user.token,
+        totalPrice: valorTotal,
       },
     };
-    const id = await requestCheckout(data);
+    const id = await requestCheckout(data, user.token);
     history.push(`/customer/orders/${id}`);
   };
 
@@ -31,7 +42,10 @@ function Checkout() {
       </div>
       <div>
         <h1>Detalhes e Endereço para Entrega</h1>
-        <AddAddress />
+        <AddAddress
+          addressState={ addressState }
+          setAddressState={ setAddressState }
+        />
       </div>
       <button
         type="button"
