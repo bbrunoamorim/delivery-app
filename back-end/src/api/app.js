@@ -19,6 +19,5 @@ app.use('/login', LoginRouter);
 app.use('/products', ProductRouter);
 app.use('/checkout', CheckoutRouter);
 app.use('/orders', SalesRouter);
-app.get('/coffee', (_req, res) => res.status(418).end());
 
 module.exports = app;

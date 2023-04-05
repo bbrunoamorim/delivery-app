@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import AppContext from '../context/Context';
 import Input from '../components/Input';
@@ -54,7 +54,6 @@ function LoginPage() {
   };
 
   const handleClickLogin = async () => {
-    // const token = JSON.parse(localStorage.getItem('user').token);
     try {
       const { data } = await requestLogin({ email, password });
       await setLocalStorageData();
@@ -78,7 +77,18 @@ function LoginPage() {
     }
   };
 
+  const checkIfLoggedIn = useCallback(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setName(user.name);
+      setEmail(user.email);
+      history.push('/customer/products');
+    }
+  }, [history, setName, setEmail]);
+
   useEffect(() => {
+    checkIfLoggedIn();
+
     const verifyLogin = () => {
       const regex = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z.]*\w$/;
       const MIN_LENGTH = 5;
@@ -89,7 +99,7 @@ function LoginPage() {
     } else {
       setBtnLogin(true);
     }
-  }, [email, password, setBtnLogin]);
+  }, [email, password, setBtnLogin, checkIfLoggedIn]);
 
   const handleClickRegister = () => history.push('/register');
   return (
