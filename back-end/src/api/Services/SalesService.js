@@ -1,5 +1,19 @@
 const { SaleModel, UserModel } = require('../../database/models');
 
+const getAllSale = async (email) => {
+  const { id } = await UserModel.findOne({ where: { email } });
+  if (!id) return { type: null, message: 'not found orders' };
+  const sales = await SaleModel.findAll({
+    where: { sellerId: id },
+    include: [{
+    model: UserModel,
+    as: 'seller',
+    attributes: ['name'],
+  }] });
+
+  return { type: null, message: sales };
+};
+
 const getSaleById = async (sellerId) => {
   const sales = await SaleModel.findOne({
     where: { id: sellerId },
@@ -26,6 +40,7 @@ const updateStatus = async (saleId, status) => {
 };
 
 module.exports = {
+  getAllSale,
   getSaleById,
   updateStatus,
 };

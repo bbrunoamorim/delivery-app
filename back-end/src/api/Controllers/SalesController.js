@@ -1,5 +1,12 @@
 const SalesService = require('../Services/SalesService');
 
+const getAllSales = async (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(404).json({ message: 'Email not found' });
+  const { message } = await SalesService.getAllSale(email);
+  return res.status(200).json(message);
+};
+
 const getSaleById = async (req, res) => {
   const { id } = req.params;
   const { message } = await SalesService.getSaleById(id);
@@ -20,6 +27,7 @@ const updateStatus = async (req, res) => {
 };
 
 module.exports = {
+  getAllSales,
   getSaleById,
   updateStatus,
 };

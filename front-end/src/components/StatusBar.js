@@ -9,6 +9,7 @@ export default function StatusBar({ order, date, status, updateStatus }) {
   const PREPARING_CHECK = 'button-preparing-check';
   const PREPARING = 2;
   const IN_TRANSIT = 3;
+  const FOUR = 4;
 
   const data = new Date(date);
 
@@ -23,7 +24,7 @@ export default function StatusBar({ order, date, status, updateStatus }) {
       <tr>
         <th data-testid={ `${ROUTE}__${LABEL_ORDER}` }>
           PEDIDO
-          {order}
+          {String(order).padStart(FOUR, '0')}
         </th>
         <th data-testid={ `${ROUTE}__${ORDER_DATE}` }>
           {formattedDate}

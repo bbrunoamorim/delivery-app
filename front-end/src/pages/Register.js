@@ -43,7 +43,6 @@ function Register() {
   const handleClickRegister = async () => {
     const status = 409;
     const create = await requestCreateUsers({ name, email, password });
-    console.log(create);
     if (create.type !== status) {
       history.push('/customer/products');
     }
