@@ -12,7 +12,7 @@ function AdmManage() {
     password,
     setPassword,
     error,
-    // setError,
+    setError,
     name,
     setName,
     btnRegister,
@@ -28,7 +28,7 @@ function AdmManage() {
   const idEmail = 'input-email';
   const idPassword = 'input-password';
   const idBtnRegister = 'button-register';
-  const idElementInvalid = 'element-invalid_register';
+  const idElementInvalid = 'element-invalid-register';
   // const idRole = 'select-role';
   const idCustomerProducts = 'customer_products';
   const idElementNavBarLinkOrders = 'element-navbar-link-orders';
@@ -51,14 +51,18 @@ function AdmManage() {
   };
 
   const handleClickRegister = async (event) => {
-    event.preventDefault();
-    const { token } = JSON.parse(localStorage.getItem('user'));
-    const create = await requestCreateAdm({ name, email, password, role }, token);
-    console.log(create);
-    setName('');
-    setEmail('');
-    setPassword('');
-    setRole('');
+    try {
+      event.preventDefault();
+      const { token } = JSON.parse(localStorage.getItem('user'));
+      const create = await requestCreateAdm({ name, email, password, role }, token);
+      console.log(create);
+      setName('');
+      setEmail('');
+      setPassword('');
+      setRole('');
+    } catch (err) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -116,7 +120,7 @@ function AdmManage() {
         Password:
         <Input
           testId={ `${ADMIN}__${idPassword}` }
-          type="password"
+          type="text"
           name="password"
           value={ password }
           onChange={ handleChangePassword }
