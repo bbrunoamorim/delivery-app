@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import AppContext from '../context/Context';
@@ -21,7 +21,7 @@ function AdmManage() {
     setRole,
   } = useContext(AppContext);
 
-  // const history = useHistory();
+  const history = useHistory();
 
   const ADMIN = 'admin_manage';
   const idName = 'input-name';
@@ -53,8 +53,7 @@ function AdmManage() {
   const handleClickRegister = async (event) => {
     event.preventDefault();
     const { token } = JSON.parse(localStorage.getItem('user'));
-    const create = await requestCreateAdm({ name, email, password, role }, token);
-    console.log(create);
+    await requestCreateAdm({ name, email, password, role }, token);
     setName('');
     setEmail('');
     setPassword('');
@@ -91,6 +90,9 @@ function AdmManage() {
           type="nav"
           value="nav"
           testId={ `${idCustomerProducts}__${idElementNavBarUserFullName}` }
+          onClick={ () => {
+            history.push('/login');
+          } }
           nameBtn="Sair"
         />
       </nav>
