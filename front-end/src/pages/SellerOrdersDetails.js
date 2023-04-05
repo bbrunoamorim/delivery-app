@@ -1,9 +1,8 @@
-import React, { useContext, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import SubtitleBar from '../components/SubtitleBar';
 import ItemOrderDetails from '../components/ItemOrderDetails';
 import { requestSales, requestSalesProducts, updateSaleStatus } from '../services/api';
-import AppContext from '../context/Context';
 import StatusBar from '../components/StatusBar';
 import CustomerProductsNavbar from '../components/CustomerProductsNavbar';
 import mapStatus from '../services/statusMap';
@@ -15,8 +14,7 @@ export default function SellerOrdersDetails() {
   const TOTAL_PRICE = 'element-order-total-price';
 
   const [isLoading, setIsLoading] = useState(true);
-  const { sales, setSales } = useContext(AppContext);
-
+  const [sales, setSales] = useState();
   const getSalesAndProducts = useCallback(async () => {
     try {
       const orderId = id;
@@ -26,14 +24,13 @@ export default function SellerOrdersDetails() {
       if (!dataset || !datasetProduct) history.push('/seller/orders');
 
       const newObj = { sale: dataset, saleProducts: datasetProduct };
-
       setSales(newObj);
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
     }
-  }, [history, id, setSales]);
+  }, [history, id]);
 
   const handleUpdateStatus = async (status) => {
     await updateSaleStatus(id, mapStatus(status));
@@ -42,7 +39,7 @@ export default function SellerOrdersDetails() {
 
   useEffect(() => {
     getSalesAndProducts();
-  }, [getSalesAndProducts]);
+  }, [id, history, getSalesAndProducts]);
 
   return (
     <div>

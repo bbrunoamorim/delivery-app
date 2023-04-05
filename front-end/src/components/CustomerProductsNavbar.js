@@ -22,7 +22,7 @@ export default function CustomerProductsNavbar({ name }) {
     <nav>
       <Button
         type="button"
-        data-testid={ `${ROUTE}__${ORDERS}` }
+        testId={ `${ROUTE}__${ORDERS}` }
         onClick={ () => { history.push('/seller/orders'); } }
         nameBtn="PEDIDOS"
       />
@@ -31,14 +31,12 @@ export default function CustomerProductsNavbar({ name }) {
       >
         { name }
       </text>
-      <a href="/login">
-        <Button
-          type="button"
-          data-testid={ `${ROUTE}__${LOGOUT}` }
-          nameBtn="Sair"
-          onClick={ () => logout() }
-        />
-      </a>
+      <Button
+        type="button"
+        testId={ `${ROUTE}__${LOGOUT}` }
+        nameBtn="Sair"
+        onClick={ () => logout() }
+      />
     </nav>
   );
 }
