@@ -4,14 +4,14 @@ import Button from '../components/Button';
 import CustomerOrdersDetails from '../components/CustomerOrdersDetails';
 import CustomerOrdersTitle from '../components/CustomerOrdersTitle';
 import AppContext from '../context/Context';
-import { requestSales, requestSalesProducts } from '../services/api';
+import { requestSales, requestSalesProducts, updateSaleStatus } from '../services/api';
 import Navbar from '../components/Navbar';
 
 export default function OrdersDetailsCostumer() {
   const [customerProducts, setCustomerProducts] = useState([]);
   const [informations, setInformations] = useState({});
-  const [disable, setDisable] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [statusSale, setStatusSale] = useState('');
   const { valorTotal } = useContext(AppContext);
 
   const ORDER_ID = 'customer_order_details__element-order';
@@ -27,17 +27,14 @@ export default function OrdersDetailsCostumer() {
 
   useEffect(() => {
     getProductsSale();
-  }, [id, getProductsSale]);
+  }, [id, getProductsSale, statusSale]);
 
-  const updateStatus = () => {
-    const { status } = informations;
-    if (status === 'Em Trânsito') {
-      setDisable(false);
-    } else {
-      setDisable(true);
-    }
+  const updateStatus = async () => {
+    setStatusSale('Entregue');
+    await updateSaleStatus(id, statusSale);
+    return getProductsSale();
   };
-  console.log(informations)
+
   return (
     <div>
       <Navbar />
@@ -47,7 +44,7 @@ export default function OrdersDetailsCostumer() {
             <p>Carregando...</p>
           ) : (
             <CustomerOrdersTitle
-              seller={ informations.seller.name }
+              seller={ informations?.seller?.name }
               date={ informations.saleDate }
               id={ informations.id }
             />
@@ -59,14 +56,14 @@ export default function OrdersDetailsCostumer() {
             <th>Valor Unitário</th>
             <th>Sub-total</th>
             <Button
-              disabled={ disable }
+              disabled={ informations.status !== 'Em Trânsito' }
               testId="customer_order_details__button-delivery-check"
               type="button"
               nameBtn="MARCAR COMO ENTREGUE"
               onClick={ updateStatus }
             />
             <td data-testid={ `${ORDER_ID}-details-label-delivery-status${1}` }>
-              {informations.status}
+              {informations.status || statusSale}
             </td>
           </tr>
         </thead>
@@ -86,7 +83,10 @@ export default function OrdersDetailsCostumer() {
       </table>
       <div data-testid={ `${ORDER_ID}-total-price` }>
         Valor Total:
-        {(Math.round(valorTotal * 100) / 100).toFixed(2).replace('.', ',')}
+        {(Math.round(customerProducts
+          .reduce((acc, curr) => Number(acc) + Number(curr.product.price)
+          * Number(curr.quantity), 0) * 100) / 100)
+          .toFixed(2).replace('.', ',')}
       </div>
     </div>
   );
