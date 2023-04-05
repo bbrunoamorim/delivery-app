@@ -76,8 +76,17 @@ export const requestSales = async (orderId) => {
   return data;
 };
 
-export const requestUserOrders = async () => {
-  const { data } = await api.get('/orders');
+export const requestUserOrders = async (email) => {
+  const config = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': applicationJson,
+    },
+  };
+  const dataset = { email };
+  const { data } = await api.post('/orders/user', dataset, config);
+
   return data;
 };
 

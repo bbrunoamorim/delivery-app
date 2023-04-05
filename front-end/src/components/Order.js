@@ -2,8 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-export default function Order({ id, status, orderDate, price }) {
+export default function Order({ id, orderDate, status, price }) {
   const history = useHistory();
+
+  const data = new Date(orderDate);
+
+  const day = data.getDate().toString().padStart(2, '0');
+  const month = (data.getMonth() + 1).toString().padStart(2, '0');
+  const year = data.getFullYear().toString();
+  const formattedDate = `${day}/${month}/${year}`;
 
   return (
     <button
@@ -24,9 +31,13 @@ export default function Order({ id, status, orderDate, price }) {
           <p
             data-testid={ `customer_orders__element-order-date-${id}` }
           >
-            { orderDate }
+            { formattedDate }
           </p>
-          <p data-testid={ `customer_orders__element-card-price-${id}` }>{ price }</p>
+          <p
+            data-testid={ `customer_orders__element-card-price-${id}` }
+          >
+            { price.replace('.', ',') }
+          </p>
         </div>
       </section>
     </button>

@@ -39,14 +39,21 @@ const updateStatus = async (saleId, status) => {
   return { type: null, message: 'Sale updated successfully' };
 };
 
-const findAll = async () => {
-  const sales = await SaleModel.findAll();
-  return sales;
+const getUserOrders = async (email) => {
+  const { id } = await UserModel.findOne({ where: { email } });
+
+  if (!id) return { type: null, message: 'not found orders' };
+
+  const orders = await SaleModel.findAll({
+    where: { userId: id },
+  });
+
+  return { type: null, message: orders };
 };
 
 module.exports = {
   getAllSale,
   getSaleById,
   updateStatus,
-  findAll,
+  getUserOrders,
 };

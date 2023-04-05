@@ -1,26 +1,17 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import AppContext from '../context/Context';
-import { requestLogin, requestUserOrders } from '../services/api';
+import { requestUserOrders } from '../services/api';
 import Order from '../components/Order';
 
 export default function CustomerOrders() {
-  const { sales, setSales, email, password } = useContext(AppContext);
-
-  const findUser = useCallback(async () => {
-    const { data: { message: { id } } } = await requestLogin({ email, password });
-
-    return id;
-  }, [email, password]);
+  const { sales, setSales, email } = useContext(AppContext);
 
   const getSales = useCallback(async () => {
-    const data = await requestUserOrders();
-    const id = await findUser();
+    const data = await requestUserOrders(email);
 
-    const userSales = data.filter(({ userId }) => userId === id);
-
-    setSales(userSales);
-  }, [setSales, findUser]);
+    setSales(data);
+  }, [setSales, email]);
 
   useEffect(() => {
     getSales();
