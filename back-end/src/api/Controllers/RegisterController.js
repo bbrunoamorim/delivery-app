@@ -4,7 +4,6 @@ const RegisterService = require('../Services/RegisterService');
 
 const createUser = async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(req.body);
   const newUser = await RegisterService.createUser(name, email, password);
 
   if (!newUser.type) {
@@ -20,7 +19,6 @@ const findAll = async (req, res) => {
 
 const createAdm = async (req, res) => {
   const { name, email, password, role } = req.body;
-  console.log(req.body);
   const newUser = await RegisterService.createAdm(name, email, password, role);
 
   if (!newUser.type) {

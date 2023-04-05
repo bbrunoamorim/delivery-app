@@ -7,7 +7,12 @@ import Checkout from './pages/Checkout';
 import Register from './pages/Register';
 import SellerOrdersDetails from './pages/SellerOrdersDetails';
 import AdmManage from './pages/AdmManage';
+<<<<<<< HEAD
 import OrdersDetailsCostumer from './pages/OrdersDetailsCustomer';
+=======
+import SellerOrders from './pages/SellerOrders';
+import CustomerOrdersDetails from './pages/CustomerOrdersDetails';
+>>>>>>> 34d7e6b1d26ac69711dc34bbabcf27322b504ff6
 
 function App() {
   return (
@@ -17,9 +22,11 @@ function App() {
       <Route exact path="/customer/products" component={ Products } />
       <Route exact path="/customer/checkout" component={ Checkout } />
       <Route exact path="/register" component={ Register } />
+      <Route exact path="/seller/orders/" component={ SellerOrders } />
       <Route exact path="/seller/orders/:id" component={ SellerOrdersDetails } />
       <Route exact path="/customer/orders/:id" component={ OrdersDetailsCostumer } />
       <Route exact path="/admin/manage" component={ AdmManage } />
+      <Route exact path="/customer/orders/:id" component={ CustomerOrdersDetails } />
     </Switch>
   );
 }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const api = axios.create({
+const applicationJson = 'application/json';
+const api = axios.create({
   baseURL: 'http://localhost:3001',
 });
 
@@ -37,8 +38,7 @@ export const requestLogin = async (dataset) => {
     method: 'POST',
     mode: 'cors',
     headers: {
-      'Content-Type': 'application/json',
-      // authorization: token,
+      'Content-Type': applicationJson,
     },
   };
   const response = await api.post('/login', dataset, config);
@@ -55,6 +55,20 @@ export const requestCheckout = async (dataset, token) => {
   };
   const { data } = await api.post('/checkout', dataset, config);
   return data.id;
+};
+
+export const requestAllSales = async (email) => {
+  const config = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': applicationJson,
+    },
+  };
+  const dataset = { email };
+  const { data } = await api.post('/orders', dataset, config);
+
+  return data;
 };
 
 export const requestSales = async (orderId) => {
@@ -74,13 +88,23 @@ export const requestSaleProduct = async (orderId) => {
 
 export const updateSaleStatus = async (id, status) => {
   const config = {
-    method: 'POST',
+    method: 'PATCH',
     mode: 'cors',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': applicationJson,
     },
   };
   const dataset = { id, status };
   const { data } = await api.patch('orders/update', dataset, config);
+  return data;
+};
+
+export const requestSellers = async () => {
+  const { data } = await api.get('/users/sellers');
+  return data;
+};
+
+export const requestCheckoutSellers = async () => {
+  const { data } = await api.get('/checkout/sellers');
   return data;
 };
