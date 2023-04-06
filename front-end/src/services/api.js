@@ -95,6 +95,11 @@ export const requestSalesProducts = async (orderId) => {
   return data;
 };
 
+export const requestSaleProduct = async (orderId) => {
+  const { data } = await api.get(`costumer/${orderId}`);
+  return data;
+};
+
 export const updateSaleStatus = async (id, status) => {
   const config = {
     method: 'PATCH',
