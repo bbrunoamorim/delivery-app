@@ -13,7 +13,6 @@ const errorMap = {
   POST_DOES_NOT_EXIST: 404,
   USER_ALREADY_REGISTERED: 409,
   NOT_FOUND: 404,
-
 };
 
 const mapError = (type) => errorMap[type] || 500;

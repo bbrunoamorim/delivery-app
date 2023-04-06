@@ -38,7 +38,7 @@ export const requestLogin = async (dataset) => {
     method: 'POST',
     mode: 'cors',
     headers: {
-      'Content-Type': applicationJson,
+      'Content-Type': 'application/json',
     },
   };
   const response = await api.post('/login', dataset, config);
@@ -73,6 +73,20 @@ export const requestAllSales = async (email) => {
 
 export const requestSales = async (orderId) => {
   const { data } = await api.get(`/orders/${orderId}`);
+  return data;
+};
+
+export const requestUserOrders = async (email) => {
+  const config = {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': applicationJson,
+    },
+  };
+  const dataset = { email };
+  const { data } = await api.post('/orders/user', dataset, config);
+
   return data;
 };
 

@@ -26,8 +26,19 @@ const updateStatus = async (req, res) => {
   return res.json({ success: result.message });
 };
 
+const getUserOrders = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) return res.status(404).json({ message: 'Email not found' });
+
+  const { message } = await SalesService.getUserOrders(email);
+
+  return res.status(200).json(message);
+};
+
 module.exports = {
   getAllSales,
   getSaleById,
   updateStatus,
+  getUserOrders,
 };
