@@ -12,7 +12,7 @@ export default function OrdersDetailsCostumer() {
   const [customerProducts, setCustomerProducts] = useState([]);
   const [informations, setInformations] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [statusSale, setStatusSale] = useState('');
+  const [statusSale] = useState('');
 
   const ORDER_ID = 'customer_order_details__element-order';
   const { id } = useParams();
