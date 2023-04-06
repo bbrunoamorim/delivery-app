@@ -61,7 +61,7 @@ export default function OrdersDetailsCostumer() {
               nameBtn="MARCAR COMO ENTREGUE"
               onClick={ updateStatus }
             />
-            <td data-testid={ `${ORDER_ID}-details-label-delivery-status${1}` }>
+            <td data-testid={ `${ORDER_ID}-details-label-delivery-status${id}` }>
               {informations.status || statusSale}
             </td>
           </tr>
