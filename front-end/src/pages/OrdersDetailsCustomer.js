@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import CustomerOrdersDetails from '../components/CustomerOrdersDetails';
 import CustomerOrdersTitle from '../components/CustomerOrdersTitle';
+import mapStatus from '../services/statusMap';
 
 import { requestSales, requestSalesProducts, updateSaleStatus } from '../services/api';
 import Navbar from '../components/Navbar';
@@ -11,7 +12,7 @@ export default function OrdersDetailsCostumer() {
   const [customerProducts, setCustomerProducts] = useState([]);
   const [informations, setInformations] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [statusSale, setStatusSale] = useState('');
+  const [statusSale] = useState('');
 
   const ORDER_ID = 'customer_order_details__element-order';
   const { id } = useParams();
@@ -28,9 +29,8 @@ export default function OrdersDetailsCostumer() {
     getProductsSale();
   }, [id, getProductsSale, statusSale]);
 
-  const updateStatus = async () => {
-    setStatusSale('Entregue');
-    await updateSaleStatus(id, statusSale);
+  const updateStatus = async (status) => {
+    await updateSaleStatus(id, mapStatus(status));
     return getProductsSale();
   };
 

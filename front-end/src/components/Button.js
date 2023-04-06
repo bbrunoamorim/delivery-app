@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 
 function Button(props) {
   const { className, onClick, testId, disabled, nameBtn, id } = props;
+  const DELIVERED = 4;
   return (
     <button
       type="button"
       className={ className }
-      onClick={ onClick }
+      onClick={ () => onClick(DELIVERED) }
       // onSubmit={ onSubmit }
       data-testid={ testId }
       disabled={ disabled }
