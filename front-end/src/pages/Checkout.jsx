@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import { useContext, useState } from 'react';
-import Table from '../components/CheckoutTable';
+import Table from '../components/CheckoutTable.jsx';
 import AddAddress from '../components/CheckoutAddAddress';
 import { requestCheckout } from '../services/api';
 import AppContext from '../context/Context';
@@ -45,14 +45,14 @@ function Checkout() {
       <div>
         <h1>Detalhes e Endereço para Entrega</h1>
         <AddAddress
-          addressState={ addressState }
-          setAddressState={ setAddressState }
+          addressState={addressState}
+          setAddressState={setAddressState}
         />
       </div>
       <button
         type="button"
         data-testid="customer_checkout__button-submit-order"
-        onClick={ handleClickCheckout }
+        onClick={handleClickCheckout}
       >
         FINALIZAR PEDIDO
       </button>

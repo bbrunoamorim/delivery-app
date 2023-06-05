@@ -19,12 +19,12 @@ function Table() {
       <tbody>
         {finalProducts.map(({ name, quantity, price, id }, index) => (
           <RowTable
-            key={ index }
-            name={ name }
-            quantity={ quantity }
-            price={ price }
-            index={ index }
-            id={ id }
+            key={index}
+            name={name}
+            quantity={quantity}
+            price={price}
+            index={index}
+            id={id}
           />
         ))}
       </tbody>
