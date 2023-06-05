@@ -102,6 +102,7 @@ function LoginPage() {
   }, [email, password, setBtnLogin, checkIfLoggedIn]);
 
   const handleClickRegister = () => history.push('/register');
+
   return (
     <div>
       <h1>Login</h1>
@@ -109,32 +110,32 @@ function LoginPage() {
         E-mail:
         <Input
           type="email"
-          value={ email }
-          onChange={ handleChangeEmail }
-          testId={ `${LOGIN}__${idEmail}` }
+          value={email}
+          onChange={handleChangeEmail}
+          testId={`${LOGIN}__${idEmail}`}
         />
         Password:
         <Input
-          testId={ `${LOGIN}__${idPassword}` }
+          testId={`${LOGIN}__${idPassword}`}
           type="password"
-          value={ password }
-          onChange={ handleChangePassword }
+          value={password}
+          onChange={handleChangePassword}
         />
         <Button
           type="submit"
-          testId={ `${LOGIN}__${idBtnLogin}` }
-          disabled={ btnLogin }
+          testId={`${LOGIN}__${idBtnLogin}`}
+          disabled={btnLogin}
           nameBtn="Login"
-          onClick={ handleClickLogin }
+          onClick={handleClickLogin}
         />
         <Button
           type="submit"
-          testId={ `${LOGIN}__${idBtnRegister}` }
+          testId={`${LOGIN}__${idBtnRegister}`}
           nameBtn="Register"
-          onClick={ handleClickRegister }
+          onClick={handleClickRegister}
         />
       </form>
-      <div data-testid={ `${LOGIN}__${idEmailInvalid}` }>
+      <div data-testid={`${LOGIN}__${idEmailInvalid}`}>
         {error && <p> Email or password incorrect. </p>}
       </div>
     </div>
