@@ -1,11 +1,29 @@
+/* eslint-disable react/jsx-max-depth */
 import React, { useCallback, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import {
+  Input,
+  InputGroup,
+  InputRightElement,
+  Button,
+  InputLeftElement,
+  Flex,
+  Stack,
+  Heading,
+  Checkbox,
+  Link,
+  Image,
+  Alert,
+  AlertIcon,
+} from '@chakra-ui/react';
+import { EmailIcon, LockIcon, ViewIcon } from '@chakra-ui/icons';
 import AppContext from '../context/Context';
-import Input from '../components/Input';
-import Button from '../components/Button';
 import { requestLogin } from '../services/api';
 
 function LoginPage() {
+  const [show, setShow] = React.useState(false);
+  const handleSetShow = () => setShow(!show);
+
   const {
     email,
     setEmail,
@@ -20,13 +38,6 @@ function LoginPage() {
     setUserLogged,
   } = useContext(AppContext);
   const history = useHistory();
-
-  const LOGIN = 'common_login';
-  const idEmail = 'input-email';
-  const idPassword = 'input-password';
-  const idBtnLogin = 'button-login';
-  const idBtnRegister = 'button-register';
-  const idEmailInvalid = 'element-invalid-email';
 
   const handleChangePassword = ({ target }) => {
     setPassword(target.value);
@@ -104,41 +115,76 @@ function LoginPage() {
   const handleClickRegister = () => history.push('/register');
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form>
-        E-mail:
-        <Input
-          type="email"
-          value={email}
-          onChange={handleChangeEmail}
-          testId={`${LOGIN}__${idEmail}`}
+    <Stack minH="100vh" direction={ { base: 'column', md: 'row' } }>
+      <Flex p={ 8 } flex={ 1 } align="center" justify="center">
+        <Stack spacing={ 4 } w="full" maxW="md">
+          <Heading fontSize="2xl">Faça login em sua conta</Heading>
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <EmailIcon color="gray.400" />
+            </InputLeftElement>
+            <Input
+              type="email"
+              placeholder="Digite seu e-mail"
+              variant="flushed"
+              onChange={ handleChangeEmail }
+            />
+          </InputGroup>
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <LockIcon color="gray.400" />
+            </InputLeftElement>
+            <Input
+              type={ show ? 'text' : 'password' }
+              placeholder="Sua senha"
+              variant="flushed"
+              onChange={ handleChangePassword }
+            />
+            <InputRightElement>
+              <ViewIcon
+                onClick={ handleSetShow }
+                color="gray.400"
+                sx={ { cursor: 'pointer' } }
+              />
+            </InputRightElement>
+          </InputGroup>
+          <Stack spacing={ 6 }>
+            <Stack
+              direction={ { base: 'column', sm: 'row' } }
+              align="start"
+              justify="space-between"
+            >
+              <Checkbox>Lembrar de mim</Checkbox>
+              <Link color="blue.500" href="/">Esqueceu sua senha?</Link>
+            </Stack>
+            <Button
+              colorScheme="blue"
+              variant="solid"
+              onClick={ handleClickLogin }
+              disabled={ btnLogin }
+            >
+              Entrar
+            </Button>
+            <Button variant="solid" onClick={ handleClickRegister }>
+              Não possui conta? Registre-se
+            </Button>
+            {error && (
+              <Alert status="error">
+                <AlertIcon />
+                E-mail ou senha inválidos.
+              </Alert>
+            )}
+          </Stack>
+        </Stack>
+      </Flex>
+      <Flex flex={ 1 }>
+        <Image
+          alt="Login Image"
+          objectFit="cover"
+          src="beers.jpg"
         />
-        Password:
-        <Input
-          testId={`${LOGIN}__${idPassword}`}
-          type="password"
-          value={password}
-          onChange={handleChangePassword}
-        />
-        <Button
-          type="submit"
-          testId={`${LOGIN}__${idBtnLogin}`}
-          disabled={btnLogin}
-          nameBtn="Login"
-          onClick={handleClickLogin}
-        />
-        <Button
-          type="submit"
-          testId={`${LOGIN}__${idBtnRegister}`}
-          nameBtn="Register"
-          onClick={handleClickRegister}
-        />
-      </form>
-      <div data-testid={`${LOGIN}__${idEmailInvalid}`}>
-        {error && <p> Email or password incorrect. </p>}
-      </div>
-    </div>
+      </Flex>
+    </Stack>
   );
 }
 
